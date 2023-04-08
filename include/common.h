@@ -1,6 +1,7 @@
 #ifndef COMMON
 #define COMMON
-#include "pico/stdlib.h"
+
+#include "stdint.h"
 
 typedef struct
 {   
@@ -8,5 +9,8 @@ typedef struct
     int32_t r_to_e_wait_time;
     int32_t e_to_w_wait_time;
 } subschedule_t;
+
+/* All task prototypes */
+void task1(subschedule_t subschedule);
 
 #endif /*COMMON*/

@@ -215,9 +215,11 @@ SECTIONS
 /* CUSTOM SECTIONS FOR FUNCTION PLACEMENT
 ********************************************
 */
+
+/* DO NOT MODIFY START */
     .core_0 : {
         __core_0_start__ = .;
-        *(.core_0.*)
+        KEEP(*(.core_0.*))
         . = ALIGN(4);
         __core_0_end__ = .;
     } > SRAM_0 AT > FLASH
@@ -225,19 +227,26 @@ SECTIONS
 
     .core_1 : {
         __core_1_start__ = .;
-        *(.core_1.*)
+        KEEP(*(.core_1.*))
         . = ALIGN(4);
         __core_1_end__ = .;
     } > SRAM_2 AT > FLASH
     __core_1_source__ = LOADADDR(.core_1);
 
-    .runtime_copy : {
-        __runtime_copy_start__ = .;
-        *(.runtime_copy.*)
+/* DO NOT MODIFY END */
+
+/* THE FOLLOWING LINKER DEFINITIONS MUST BE MODIFIED FOR EVERY TASK */
+
+    .task1_runtime_copy : {
+        __task1_runtime_copy_start__ = .;
+        KEEP(*(.task1_runtime_copy.*))
         . = ALIGN(4);
-        __runtime_copy_end__ = .;
+        __task1_runtime_copy_end__ = .;
     } > FLASH
-    __runtime_copy_source__ = LOADADDR(.runtime_copy);
+    __task1_runtime_copy_source__ = LOADADDR(.task1_runtime_copy);
+
+/* THE AFOREMENTIONED LINKER DEFINITIONS MUST BE MODIFIED FOR EVERY TASK */
+
 
 
 /* ******************************************** */

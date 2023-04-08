@@ -2,16 +2,28 @@
 #define TASK1
 
 #include "common.h"
-#include "pico/stdlib.h"
+#include "stdint.h"
 
-// define local and memory variables here
+/**
+ * Create input and output typedefs, put all necessary values WITHIN the structs only.
+**/
 typedef struct 
 {
-    int32_t sram_memory;
-    int32_t local_data_in[8];
-    int32_t local_data_out[8];
-} local_data_t;
+    uint32_t coefficients[8];
+} data_in_t;
 
-void task1(subschedule_t subschedule);
+typedef struct 
+{
+    uint32_t coefficients[8];
+} data_out_t;
+
+/**
+ * Local data type definition, do not modify.
+ * */
+typedef struct 
+{
+    data_in_t local_data_in;
+    data_out_t local_data_out;
+} local_data_t;
 
 #endif /*TASK1*/

@@ -13,9 +13,10 @@ add_executable(${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/include/)
 
-        # ${CMAKE_CURRENT_LIST_DIR}/src/task1.c
 target_sources(${PROJECT_NAME} PUBLIC
-        ${CMAKE_CURRENT_LIST_DIR}/main.c        
+        ${CMAKE_CURRENT_LIST_DIR}/main.c       
+        ${CMAKE_CURRENT_LIST_DIR}/src/task1.c
+        ${CMAKE_CURRENT_LIST_DIR}/src/timer_functions.c 
         )
 # pull in common dependencies = library
 #  pico_multicore for two core entry
