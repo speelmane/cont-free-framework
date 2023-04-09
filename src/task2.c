@@ -1,9 +1,34 @@
-#include "common.h" // subschedule definition and 
-#include "task1.h" //data type, attribute and section start/end definitions (TODO)
 #include <string.h>
 #include <stdio.h>
+// subschedule and function prototype location
+#include "common.h" 
 
-#define __task1_runtime_copy(group) __attribute__((used, section(".task1_runtime_copy." group)))
+
+/**
+ * Define data in /data out data types
+**/
+typedef struct 
+{
+    uint32_t coefficients[8];
+} data_in_t;
+
+typedef struct 
+{
+    uint32_t coefficients[8];
+} data_out_t;
+
+/**
+ * Local data type definition.
+ * DO NOT MODIFY!
+ * */
+typedef struct 
+{
+    data_in_t local_data_in;
+    data_out_t local_data_out;
+} local_data_t;
+
+
+#define __task2_runtime_copy(group) __attribute__((used, section(".task2_runtime_copy." group)))
 
 // #define DEBUG 0
 
@@ -14,7 +39,7 @@
 const data_in_t data_in = {.coefficients = {1,2,3,4,5,6,7,8}};
 
 /* Place an attribute to note that this is an exec function */
-void __task1_runtime_copy("task1")(task1_E)(local_data_t * local_data)
+void __task2_runtime_copy("task2")(task2_E)(local_data_t * local_data)
 {
     for(int i = 0; i < 8; i++)
     {
@@ -23,7 +48,7 @@ void __task1_runtime_copy("task1")(task1_E)(local_data_t * local_data)
 }
 
 /* This will execute from the flash, except for the task_exec function*/
-void task1(subschedule_t subschedule) //add relative waiting times as a parameter here
+void task2(subschedule_t subschedule) //add relative waiting times as a parameter here
 {
     uint64_t timestamp_before = subschedule.timestamp_func();
 
@@ -38,18 +63,18 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
         printf("Local data OUT address: %p\n", &local_data.local_data_out);
     #endif
 
-    extern char __task1_runtime_copy_start__[],  __task1_runtime_copy_end__[];
+    extern char __task2_runtime_copy_start__[],  __task2_runtime_copy_end__[];
 
     #ifdef DEBUG
-        printf("Runtime copy start: %p\n", __task1_runtime_copy_start__);
-        printf("Runtime copy end: %p\n", __task1_runtime_copy_end__);
+        printf("Runtime copy start: %p\n", __task2_runtime_copy_start__);
+        printf("Runtime copy end: %p\n", __task2_runtime_copy_end__);
         printf("Core end used: %p\n", subschedule.exec_copy_func_dst);
     #endif
 
     /* Perform memcpy on data and code */
     memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
 
-    int func_size = (int) (__task1_runtime_copy_end__) - (int)(__task1_runtime_copy_start__);
+    int func_size = (int) (__task2_runtime_copy_end__) - (int)(__task2_runtime_copy_start__);
 
     #ifdef DEBUG
         printf("Size: %x\n", func_size);
@@ -57,7 +82,7 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
 
 
     /* If multiple functions are called, multiple can be copied but destination location for following functions must be adjusted according to the size of the previous function */
-    exec_copy_func = (memcpy(subschedule.exec_copy_func_dst, __task1_runtime_copy_start__, func_size) + 1); // note the +1 because the return address is even but the function must execue from an odd address (little endian)
+    exec_copy_func = (memcpy(subschedule.exec_copy_func_dst, __task2_runtime_copy_start__, func_size) + 1); // note the +1 because the return address is even but the function must execue from an odd address (little endian)
 
     #ifdef DEBUG
         printf("Copied func pointer: %p\n", exec_copy_func);
@@ -119,21 +144,21 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
 
 
 /**
- * static void task1_R(local_data_t * local_data)
+ * static void task2_R(local_data_t * local_data)
 {
     memcpy(&local_data->local_data_in, &global_coefficients, sizeof(global_coefficients));
-    memcpy(local_data->sram_memory, task1_E, )
+    memcpy(local_data->sram_memory, task2_E, )
 }
 
 // put this in a pragma of a specific code segment
-void task1_E(local_data_t * local_data)
+void task2_E(local_data_t * local_data)
 {
     local_data->local_data_out[0] = 32;
-    // do stuff to struct->task1.local_in and struct->task1.local_out
+    // do stuff to struct->task2.local_in and struct->task2.local_out
 }
 // end the pragma
 
-static void task1_W(local_data_t * local_data)
+static void task2_W(local_data_t * local_data)
 {
     flash_write(local_data->)
 }
@@ -141,16 +166,16 @@ static void task1_W(local_data_t * local_data)
     main sequence:
 
     get CPU id for sram reference
-    void (*task1_E_RAM)(); //define a function pointer for the ram func
+    void (*task2_E_RAM)(); //define a function pointer for the ram func
 
     Perform the 3-phases
-    task1_E_RAM = task1_R(&local_data);
+    task2_E_RAM = task2_R(&local_data);
 
     wait first interval R to E
     sleep_ms(subschedule.r_to_e_wait_time);
-    *(task1_E_RAM)(&local_data);
+    *(task2_E_RAM)(&local_data);
 
     wait second interval E to W
     sleep_ms(subschedule.e_to_w_wait_time);
-    task1_W(&local_data);
+    task2_W(&local_data);
 */
