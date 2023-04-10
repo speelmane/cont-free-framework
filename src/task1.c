@@ -33,7 +33,7 @@ typedef struct
 ** If the conditions are met, the variable is placed in .rodata section
 ** .rodata will be placed in the flash, regardless of the accessing core.
 */
-const data_in_t data_in = {.coefficients = {1,2,3,4,5,6,7,8}};
+static const data_in_t data_in = {.coefficients = {1,2,3,4,5,6,7,8}};
 
 /* Place an attribute to note that this is an exec function */
 void __task1_runtime_copy("task1")(task1_E)(local_data_t * local_data)
@@ -47,6 +47,9 @@ void __task1_runtime_copy("task1")(task1_E)(local_data_t * local_data)
 /* This will execute from the flash, except for the task_exec function*/
 void task1(subschedule_t subschedule) //add relative waiting times as a parameter here
 {
+    #ifdef DEBUG
+        printf("Task 1 entered \n");
+    #endif
     uint64_t timestamp_before = subschedule.timestamp_func();
 
     /* Init + read routine (FLASH) */
@@ -54,18 +57,17 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
     void (*exec_copy_func)(local_data_t * local_data);
 
     #ifdef DEBUG
-        printf("Local data address: %p\n", &local_data);
         printf("Data in (should be flash) address: %p\n", &data_in);
-        printf("Local data IN address: %p\n", &local_data.local_data_in);
-        printf("Local data OUT address: %p\n", &local_data.local_data_out);
+        printf("Task1 Local data IN address: %p\n", &local_data.local_data_in);
+        printf("Task1 Local data OUT address: %p\n", &local_data.local_data_out);
     #endif
 
     extern char __task1_runtime_copy_start__[],  __task1_runtime_copy_end__[];
 
     #ifdef DEBUG
-        printf("Runtime copy start: %p\n", __task1_runtime_copy_start__);
-        printf("Runtime copy end: %p\n", __task1_runtime_copy_end__);
-        printf("Core end used: %p\n", subschedule.exec_copy_func_dst);
+        printf("Task1 Runtime copy start: %p\n", __task1_runtime_copy_start__);
+        printf("Task1 Runtime copy end: %p\n", __task1_runtime_copy_end__);
+        printf("Task1 Core end used: %p\n", subschedule.exec_copy_func_dst);
     #endif
 
     /* Perform memcpy on data and code */
@@ -82,12 +84,12 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
     exec_copy_func = (memcpy(subschedule.exec_copy_func_dst, __task1_runtime_copy_start__, func_size) + 1); // note the +1 because the return address is even but the function must execue from an odd address (little endian)
 
     #ifdef DEBUG
-        printf("Copied func pointer: %p\n", exec_copy_func);
+        printf("Task1 copied func pointer: %p\n", exec_copy_func);
     #endif
 
     uint64_t timestamp_after = subschedule.timestamp_func();
 
-    printf("Setup timestamp before: %lli, after: %lli\n", timestamp_before, timestamp_after);
+    // printf("Setup timestamp before: %lli, after: %lli\n", timestamp_before, timestamp_after);
 
 
     /* End of Init + read routine */
@@ -114,7 +116,7 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
     /* TMP!! 
     * SOME PRINTS HERE TO CHECK VALUES ? */
    #ifdef DEBUG
-    printf("Flash routine here again\n");
+    printf("Task1 Flash routine here again\n");
    #endif
 
     /* End of Write routine and end of task job, return to the scheduler */

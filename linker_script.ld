@@ -253,6 +253,14 @@ SECTIONS
     } > FLASH
     __task2_runtime_copy_source__ = LOADADDR(.task2_runtime_copy);
 
+    .task3_runtime_copy : {
+        __task3_runtime_copy_start__ = .;
+        KEEP(*(.task3_runtime_copy.*))
+        . = ALIGN(4);
+        __task3_runtime_copy_end__ = .;
+    } > FLASH
+    __task3_runtime_copy_source__ = LOADADDR(.task3_runtime_copy);
+
 /* THE AFOREMENTIONED LINKER DEFINITIONS MUST BE MODIFIED FOR EVERY TASK */
 
 

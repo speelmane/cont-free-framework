@@ -1,3 +1,4 @@
+
 #include "pico/stdlib.h"
 #include <stdio.h>
 #include <string.h>
@@ -92,10 +93,11 @@ void __core_0("sram_0")(scheduler_core_0)()
     {
         task1(subschedule_core_0);
         uint64_t timestamp_before = timestamp_core_0();
-        sleep_ms_core_0(10000000);
+        sleep_ms_core_0(1000000);
         printf("Perf counter after sleeps: %d\n\n", bus_perf_0_hw->value);
         uint64_t timestamp_after = timestamp_core_0();
         printf("Timestamp before: %lli, after: %lli\n", timestamp_before, timestamp_after);
+        task3(subschedule_core_0);
         printf("Perf counter in loop: %d\n\n", bus_perf_0_hw->value);
     }
 }
