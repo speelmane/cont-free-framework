@@ -1,7 +1,7 @@
 #include "hardware/structs/timer.h"
 #include "timer_functions.h"
 
-void __core_0("time")(busy_wait_until_core_0)(uint64_t target) {
+void __core_0_code("time")(busy_wait_until_core_0)(uint64_t target) {
     uint32_t hi_target = (uint32_t)(target >> 32u);
     uint32_t hi = timer_hw->timerawh;
     while (hi < hi_target) {
@@ -15,7 +15,7 @@ void __core_0("time")(busy_wait_until_core_0)(uint64_t target) {
 }
 
 /* Returns a timestamp , check func call */
-uint64_t __core_0("time")(timestamp_core_0)() {
+uint64_t __core_0_code("time")(timestamp_core_0)() {
     // Need to make sure that the upper 32 bits of the timer
     // don't change, so read that first
     uint32_t hi = timer_hw->timerawh;
@@ -34,14 +34,14 @@ uint64_t __core_0("time")(timestamp_core_0)() {
     return ((uint64_t) hi << 32u) | lo;
 }
 
-void __core_0("time")(sleep_ms_core_0)(uint64_t us)
+void __core_0_code("time")(sleep_ms_core_0)(uint64_t us)
 {
     uint64_t current_timestamp = timestamp_core_0();
     uint64_t target = current_timestamp + us;
     busy_wait_until_core_0(target);
 }
 
-void __core_1("time")(busy_wait_until_core_1)(uint64_t target) {
+void __core_1_code("time")(busy_wait_until_core_1)(uint64_t target) {
     uint32_t hi_target = (uint32_t)(target >> 32u);
     uint32_t hi = timer_hw->timerawh;
     while (hi < hi_target) {
@@ -55,7 +55,7 @@ void __core_1("time")(busy_wait_until_core_1)(uint64_t target) {
 }
 
 /* Returns a timestamp , check func call */
-uint64_t __core_1("time")(timestamp_core_1)() {
+uint64_t __core_1_code("time")(timestamp_core_1)() {
     // Need to make sure that the upper 32 bits of the timer
     // don't change, so read that first
     uint32_t hi = timer_hw->timerawh;
@@ -73,7 +73,7 @@ uint64_t __core_1("time")(timestamp_core_1)() {
     return ((uint64_t) hi << 32u) | lo;
 }
 
-void __core_1("time")(sleep_ms_core_1)(uint64_t us)
+void __core_1_code("time")(sleep_ms_core_1)(uint64_t us)
 {
     uint64_t current_timestamp = timestamp_core_1();
     uint64_t target = current_timestamp + us;

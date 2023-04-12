@@ -6,6 +6,8 @@
 #include <stdio.h>
 // subschedule and function prototype location
 #include "common.h" 
+#include "pico/platform.h"
+
 
 /*
     Additional type declarations
@@ -64,7 +66,6 @@ void __task2_runtime_copy("task2")(task2_E)(local_data_t * local_data)
     _Pragma( "loopbound min 15 max 15" )
     for ( i = 0; i < 15; ++i ) {
         binarysearch_seed = ( ( binarysearch_seed * 133 ) + 81 );
-        // binarysearch_seed = ( ( binarysearch_seed * 133 ) + 81 ) % 8095;
 
         binarysearch_data[ i ].key = binarysearch_seed;
         binarysearch_seed = ( ( binarysearch_seed * 133 ) + 81);

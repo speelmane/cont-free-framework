@@ -16,26 +16,12 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_sources(${PROJECT_NAME} PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/main.c       
         ${CMAKE_CURRENT_LIST_DIR}/src/timer_functions.c
+        ${CMAKE_CURRENT_LIST_DIR}/src/schedules.c
         ${CMAKE_CURRENT_LIST_DIR}/src/task1.c
         ${CMAKE_CURRENT_LIST_DIR}/src/task2.c
         ${CMAKE_CURRENT_LIST_DIR}/src/task3.c
         )
 # pull in common dependencies = library
-#  pico_multicore for two core entry
-#   hardware_claim
-# hardware_clocks
-# hardware_dma
-# hardware_exception
-# hardware_gpio
-# hardware_irq
-# hardware_pwm
-# hardware_resets
-# hardware_timer
-# hardware_uart
-# pico_multicore
-# pico_standard_link
-# pico_sync
-# pico_time
 target_link_libraries(${PROJECT_NAME} pico_stdlib hardware_structs hardware_regs pico_multicore)
 
 # LINK with a custom linker script

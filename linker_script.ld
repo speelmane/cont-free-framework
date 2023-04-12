@@ -217,21 +217,37 @@ SECTIONS
 */
 
 /* DO NOT MODIFY START */
-    .core_0 : {
-        __core_0_start__ = .;
-        KEEP(*(.core_0.*))
+    .core_0_code : {
+        __core_0_code_start__ = .;
+        KEEP(*(.core_0_code.*))
         . = ALIGN(4);
-        __core_0_end__ = .;
+        __core_0_code_end__ = .;
     } > SRAM_0 AT > FLASH
-    __core_0_source__ = LOADADDR(.core_0);
+    __core_0_code_source__ = LOADADDR(.core_0_code);
 
-    .core_1 : {
-        __core_1_start__ = .;
-        KEEP(*(.core_1.*))
+    .core_0_data : {
+        __core_0_data_start__ = .;
+        KEEP(*(.core_0_data.*))
         . = ALIGN(4);
-        __core_1_end__ = .;
+        __core_0_data_end__ = .;
+    } > SRAM_1 AT > FLASH
+    __core_0_data_source__ = LOADADDR(.core_0_data);
+
+    .core_1_code : {
+        __core_1_code_start__ = .;
+        KEEP(*(.core_1_code.*))
+        . = ALIGN(4);
+        __core_1_code_end__ = .;
     } > SRAM_2 AT > FLASH
-    __core_1_source__ = LOADADDR(.core_1);
+    __core_1_code_source__ = LOADADDR(.core_1_code);
+
+    .core_1_data : {
+        __core_1_data_start__ = .;
+        KEEP(*(.core_1_data.*))
+        . = ALIGN(4);
+        __core_1_data_end__ = .;
+    } > SRAM_3 AT > FLASH
+    __core_1_data_source__ = LOADADDR(.core_1_data);
 
 /* DO NOT MODIFY END */
 

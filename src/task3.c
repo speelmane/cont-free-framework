@@ -6,6 +6,7 @@
 #include <stdio.h>
 // subschedule and function prototype location
 #include "common.h" 
+#include "pico/platform.h"
 
 /*
     Additional type declarations
@@ -46,11 +47,12 @@ typedef struct
 #define bsort_SIZE 100
 
 /* 
-    Initialize global variables, initialization and a !!const!! modifier MANDATORY!
+    Initialize data input to necessary values (independent tasks)
     If none used, keep a:
     static const data_in_t data_in = {};
 */
-static const data_in_t data_in = {};
+static __scratch_y("task3") data_in_t data_in = {};
+static __scratch_y("task3") data_out_t data_out;
 
 /*
     Place the attribute to note that this is an exec function
@@ -124,22 +126,13 @@ void __task3_runtime_copy("task3")(task3_E)(local_data_t * local_data)
 void task3(subschedule_t subschedule) //add relative waiting times as a parameter here
 {
     #ifdef DEBUG
-        printf("Task 2 entered \n");
-
-        uint64_t timestamp_before = subschedule.timestamp_func();
-
+        printf("Task 3 entered \n");
+        uint64_t timestamp_before_read_phase = subschedule.timestamp_func();
     #endif
-
 
     /* Init + read routine (FLASH) */
     local_data_t local_data;
     void (*exec_copy_func)(local_data_t * local_data);
-
-    #ifdef DEBUG
-        printf("Task3 Data in (should be flash) address: %p, size: %d\n", &data_in, sizeof(data_in));
-        printf("Task3 Local data IN address: %p\n", &local_data.local_data_in);
-        printf("Task3 Local data OUT address: %p\n", &local_data.local_data_out);
-    #endif
 
     extern char __task3_runtime_copy_start__[],  __task3_runtime_copy_end__[];
 
@@ -147,56 +140,65 @@ void task3(subschedule_t subschedule) //add relative waiting times as a paramete
         printf("Task3 Runtime copy start: %p\n", __task3_runtime_copy_start__);
         printf("Task3 Runtime copy end: %p\n", __task3_runtime_copy_end__);
         printf("Task3 Core end used: %p\n", subschedule.exec_copy_func_dst);
+        printf("Task3 Data in (should be SRAM_5) address: %p\n", &data_in);
+        printf("Task3 Local data IN address: %p\n", &local_data.local_data_in);
+        printf("Task3 Local data OUT address: %p\n", &local_data.local_data_out);
     #endif
 
     /* Perform memcpy on data and code */
-    memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
+    // memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
+    local_data.local_data_in = data_in;
 
     int func_size = (int) (__task3_runtime_copy_end__) - (int)(__task3_runtime_copy_start__);
-
-    #ifdef DEBUG
-        printf("task3 exec Size: %x\n", func_size);
-    #endif
-
 
     /* If multiple functions are called, multiple can be copied but destination location for following functions must be adjusted according to the size of the previous function */
     exec_copy_func = (memcpy(subschedule.exec_copy_func_dst, __task3_runtime_copy_start__, func_size) + 1); // note the +1 because the return address is even but the function must execue from an odd address (little endian)
 
     #ifdef DEBUG
-        printf("task3 Copied func pointer: %p\n", exec_copy_func);
-
-        uint64_t timestamp_after = subschedule.timestamp_func();
-
-        printf("task3 Setup timestamp before: %lli, after: %lli\n", timestamp_before, timestamp_after);
+        uint64_t timestamp_after_read_phase = subschedule.timestamp_func();
+        printf("Task3 copied func pointer: %p of size: %x\n", exec_copy_func, func_size);
     #endif
-
 
     /* End of Init + read routine */
 
 
     /* DELAY between task_read and task_exec functionality */
     subschedule.sleep_func(subschedule.r_to_e_wait_time);
-
-
+    #ifdef DEBUG
+        uint64_t timestamp_before_exec_phase = subschedule.timestamp_func();
+    #endif
     /* Exec routine (RAM)*/
     exec_copy_func(&local_data);
+
+    #ifdef DEBUG
+        uint64_t timestamp_after_exec_phase = subschedule.timestamp_func();
+    #endif
+
 
     /* End of Exec routine */
 
     subschedule.sleep_func(subschedule.e_to_w_wait_time);
-   
+
+    /* DELAY between task_exec and task_write functionality */
+    // subschedule.sleep_func(1000);
+
+    /* Write routine*/
     #ifdef DEBUG
-        printf("task3 Flash routine here again\n");
+        uint64_t timestamp_before_write_phase = subschedule.timestamp_func();
     #endif
 
-    /* Write routine (FLASH)*/
 
-    /* TMP!! 
-    * SOME PRINTS HERE TO CHECK VALUES ? */
+    data_out = local_data.local_data_out;
+
+
+   /* Note that the next time the task runs, the same (initial) input data is going to be used.
+    If that should not be the case, assign corresponding out data to input data too.
+   */
+
     #ifdef DEBUG
-        printf("task3 Local data out sorted is: %d\n", local_data.local_data_out.sorted);
-    #endif
-
+        uint64_t timestamp_after_write_phase = subschedule.timestamp_func();
+        printf("Task3 TS:\nread: %lli to %lli\nexec: %lli to %lli\nwrite: %lli to %lli\n\n", timestamp_before_read_phase, timestamp_after_read_phase, timestamp_before_exec_phase, timestamp_after_exec_phase, timestamp_before_write_phase, timestamp_after_write_phase);
+   #endif
 
     /* End of Write routine and end of task job, return to the scheduler */
 }
