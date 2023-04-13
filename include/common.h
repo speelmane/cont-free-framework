@@ -8,7 +8,8 @@
 #define __core_0_data(group) __attribute__((section(".core_0_data." group)))
 #define __core_1_data(group) __attribute__((section(".core_1_data." group)))
 
-#define TABLE_SIZE 2
+#define TABLE_SIZE_CORE_0 2
+#define TABLE_SIZE_CORE_1 2
 
 typedef struct
 {   

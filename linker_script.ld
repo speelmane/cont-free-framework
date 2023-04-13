@@ -129,7 +129,7 @@ SECTIONS
     /* End of .text-like segments */
     __etext = .;
 
-    /* Ram vector table, assign this to a proper bank */
+    /* Default ram vector table, assign this to a proper bank */
    .ram_vector_table (COPY): {
         *(.ram_vector_table)
     } > SRAM_1
@@ -243,6 +243,7 @@ SECTIONS
 
     .core_1_data : {
         __core_1_data_start__ = .;
+        *(.core_1_data.vtor*)
         KEEP(*(.core_1_data.*))
         . = ALIGN(4);
         __core_1_data_end__ = .;

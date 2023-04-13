@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 
+# Disable SDK alarm support for this framework
+set(PICO_TIME_DEFAULT_ALARM_POOL_DISABLED 1)
+
 # build functions from pico sdk
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 

@@ -28,7 +28,8 @@ typedef struct
 
 #define __task1_runtime_copy(group) __attribute__((used, section(".task1_runtime_copy." group)))
 
-#define DEBUG 0
+// #define DEBUG 0
+#define TIMESTAMP 0
 
 /* Initialize data in with corresponding input values of your choice
 */
@@ -50,8 +51,12 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
 {
     #ifdef DEBUG
         printf("Task 1 entered \n");
-        uint64_t timestamp_before_read_phase = subschedule.timestamp_func();
     #endif
+
+    #ifdef TIMESTAMP
+        uint64_t timestamp_READ = subschedule.timestamp_func();
+    #endif
+
 
     /* Init + read routine (FLASH) */
     local_data_t local_data;
@@ -69,7 +74,6 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
     #endif
 
     /* Perform memcpy on data and code */
-    // memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
     local_data.local_data_in = data_in;
 
     int func_size = (int) (__task1_runtime_copy_end__) - (int)(__task1_runtime_copy_start__);
@@ -84,30 +88,25 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
 
     /* End of Init + read routine */
 
-
     /* DELAY between task_read and task_exec functionality */
     subschedule.sleep_func(subschedule.r_to_e_wait_time);
-    #ifdef DEBUG
-        uint64_t timestamp_before_exec_phase = subschedule.timestamp_func();
-    #endif
+
     /* Exec routine (RAM)*/
-    exec_copy_func(&local_data);
 
-    #ifdef DEBUG
-        uint64_t timestamp_after_exec_phase = subschedule.timestamp_func();
+    #ifdef TIMESTAMP
+        uint64_t timestamp_EXECUTE = subschedule.timestamp_func();
     #endif
 
+    exec_copy_func(&local_data);
 
     /* End of Exec routine */
 
+    /* DELAY between task_exec and task_write functionality */
     subschedule.sleep_func(subschedule.e_to_w_wait_time);
 
-    /* DELAY between task_exec and task_write functionality */
-    // subschedule.sleep_func(1000);
-
     /* Write routine*/
-    #ifdef DEBUG
-        uint64_t timestamp_before_write_phase = subschedule.timestamp_func();
+    #ifdef TIMESTAMP
+        uint64_t timestamp_WRITE = subschedule.timestamp_func();
     #endif
 
 
@@ -118,10 +117,11 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
     If that should not be the case, assign corresponding out data to input data too.
    */
 
-    #ifdef DEBUG
-        uint64_t timestamp_after_write_phase = subschedule.timestamp_func();
-        printf("Task1 TS:\nread: %lli to %lli\nexec: %lli to %lli\nwrite: %lli to %lli\n\n", timestamp_before_read_phase, timestamp_after_read_phase, timestamp_before_exec_phase, timestamp_after_exec_phase, timestamp_before_write_phase, timestamp_after_write_phase);
-   #endif
+
+    #ifdef TIMESTAMP
+        uint64_t timestamp_PASS = subschedule.timestamp_func();
+        printf("\n\nCORE %d, T1\nRead: %lli, execute: %lli, write: %lli, pass: %lli\n", subschedule.cpu_id, timestamp_EXECUTE, timestamp_WRITE, timestamp_PASS);
+    #endif
 
     /* End of Write routine and end of task job, return to the scheduler */
 }
