@@ -132,7 +132,7 @@ SECTIONS
     /* Ram vector table, assign this to a proper bank */
    .ram_vector_table (COPY): {
         *(.ram_vector_table)
-    } > SCRATCH_X
+    } > SRAM_1
 
     .data : {
         __data_start__ = .;
