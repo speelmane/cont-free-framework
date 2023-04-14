@@ -8,8 +8,13 @@
 #define __core_0_data(group) __attribute__((section(".core_0_data." group)))
 #define __core_1_data(group) __attribute__((section(".core_1_data." group)))
 
-#define TABLE_SIZE_CORE_0 2
+#define __inline_external __attribute__((always_inline))
+
+#define TABLE_SIZE_CORE_0 3
 #define TABLE_SIZE_CORE_1 2
+
+// #define DEBUG 0
+// #define TIMESTAMP 0
 
 typedef struct
 {   
@@ -36,10 +41,14 @@ void task2(subschedule_t subschedule);
 
 void task3(subschedule_t subschedule);
 
+void task4(subschedule_t subschedule);
+
+// void task5(subschedule_t subschedule);
+
+
 void fill_schedule_core_0(table_entry_t table[]);
 
 void fill_schedule_core_1(table_entry_t table[]);
-
 
 
 #endif /*COMMON*/

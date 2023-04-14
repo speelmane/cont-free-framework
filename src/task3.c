@@ -8,11 +8,11 @@
 #include "common.h" 
 #include "pico/platform.h"
 
-/*
-    Additional type declarations
+/* 
+    custom defines (e.g. from the benchmark) and type declarations
 */
+#define bsort_SIZE 100
 
-// empty
 
 /*
     Define data in /data out data types, structs can also be empty (size 0).
@@ -23,7 +23,8 @@ typedef struct
 
 typedef struct 
 {
-   int sorted;
+  int bsort_Array[ bsort_SIZE ];
+  int sorted;
 } data_out_t;
 
 /*
@@ -38,15 +39,6 @@ typedef struct
 
 
 #define __task3_runtime_copy(group) __attribute__((used, section(".task3_runtime_copy." group)))
-#define __inline_external __attribute__((always_inline))
-// #define DEBUG 0
-#define TIMESTAMP 0
-
-
-/* 
-    custom defines (e.g. from the benchmark)
-*/
-#define bsort_SIZE 100
 
 /* 
     Initialize data input to necessary values (independent tasks)
@@ -111,15 +103,21 @@ int __inline_external(bsort_BubbleSort)( int Array[] )
 
 void __task3_runtime_copy("task3")(task3_E)(local_data_t * local_data)
 {
-    int bsort_Array[ bsort_SIZE ];
+  int bsort_Array[ bsort_SIZE ];
 
-    bsort_Initialize(bsort_Array);
+  bsort_Initialize(bsort_Array);
 
-    bsort_BubbleSort(bsort_Array);
+  bsort_BubbleSort(bsort_Array);
 
-    int sorted_int = bsort_return(bsort_Array); // returns 0 if sorted correctly
+  int sorted_int = bsort_return(bsort_Array); // returns 0 if sorted correctly
 
-    local_data->local_data_out.sorted = sorted_int;
+  local_data->local_data_out.sorted = sorted_int;
+
+  _Pragma( "loopbound min 100 max 100" )
+  for (int i = 0; i< bsort_SIZE; i++)
+  {
+    local_data->local_data_out.bsort_Array[i] = bsort_Array[i];
+  }
 }
 
 /*
@@ -146,14 +144,14 @@ void task3(subschedule_t subschedule) //add relative waiting times as a paramete
         printf("Task3 Runtime copy start: %p\n", __task3_runtime_copy_start__);
         printf("Task3 Runtime copy end: %p\n", __task3_runtime_copy_end__);
         printf("Task3 Core end used: %p\n", subschedule.exec_copy_func_dst);
-        printf("Task3 Data in (should be SRAM_5) address: %p\n", &data_in);
+        printf("Task3 Data in (should be SRAM_5) address, size: %d: %p\n", &data_in, sizeof(data_in));
+        printf("Task3 Data out (should be SRAM_5) address, size: %d: %p\n", &data_in, sizeof(data_out));
         printf("Task3 Local data IN address: %p\n", &local_data.local_data_in);
         printf("Task3 Local data OUT address: %p\n", &local_data.local_data_out);
     #endif
 
     /* Perform memcpy on data and code */
-    // memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
-    local_data.local_data_in = data_in;
+    memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
 
     int func_size = (int) (__task3_runtime_copy_end__) - (int)(__task3_runtime_copy_start__);
 
@@ -194,15 +192,14 @@ void task3(subschedule_t subschedule) //add relative waiting times as a paramete
         uint64_t timestamp_WRITE = subschedule.timestamp_func();
     #endif
 
-
-    data_out = local_data.local_data_out;
-
+    memcpy(&data_out, &local_data.local_data_out, sizeof(data_out));
 
    /* Note that the next time the task runs, the same (initial) input data is going to be used.
     If that should not be the case, assign corresponding out data to input data too.
    */
 
     #ifdef TIMESTAMP
+        printf("Return value: %d\n", data_out.sorted);
         uint64_t timestamp_PASS = subschedule.timestamp_func();
         printf("\n\nCORE %d, T3\nRead: %lli, execute: %lli, write: %lli, pass: %lli \n", subschedule.cpu_id, timestamp_EXECUTE, timestamp_WRITE, timestamp_PASS);
     #endif

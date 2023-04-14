@@ -1,5 +1,5 @@
 /* TASK 2
-    Purely based on a TaclE benchmark - binary_search
+    Purely based on a TaclE benchmark - insertsort
 */
 
 #include <string.h>
@@ -12,22 +12,19 @@
 /*
     Additional type declarations
 */
-struct binarysearch_DATA {
-  int key;
-  int value;
-};
 
 /*
     Define data in /data out data types, structs can also be 0.
 */
 typedef struct
 {
-    int x;
+    unsigned int a[ 11 ];
 } data_in_t;
 
 typedef struct 
 {
-   int binary_search_result;
+    unsigned int a[ 11 ];   
+    int return_result;
 } data_out_t;
 
 /*
@@ -42,62 +39,84 @@ typedef struct
 
 
 #define __task2_runtime_copy(group) __attribute__((used, section(".task2_runtime_copy." group)))
-#define __inline_external(group) __attribute__((always_inline))
-#define DEBUG 0
 
 /* Initialize global variables, initialization and a !!const!! modifier MANDATORY!
     If the conditions are met, the variable is placed in .rodata section
     .rodata will be placed in the flash, regardless of the accessing core.
 */
-static const data_in_t data_in = {.x = 8};
+static __scratch_y("task3") data_in_t data_in = {.a = {0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2}};
 
-/*
-    Place the attribute to note that this is an exec function
-*/
+static __scratch_y("task3") data_out_t data_out;
+
 void __task2_runtime_copy("task2")(task2_E)(local_data_t * local_data)
 {
-    struct binarysearch_DATA binarysearch_data[ 15 ];
+    unsigned int insertsort_a[ 11 ];
+    int insertsort_iters_i, insertsort_min_i, insertsort_max_i;
+    int insertsort_iters_a, insertsort_min_a, insertsort_max_a;
 
-    /* Init section */
-    int i;
+    insertsort_iters_i = 0;
+    insertsort_min_i = 100000;
+    insertsort_max_i = 0;
+    insertsort_iters_a = 0;
+    insertsort_min_a = 100000;
+    insertsort_max_a = 0;
 
-    int binarysearch_seed = 0;
+    /* Initialize routine */
+    register volatile int k;
+    _Pragma( "loopbound min 11 max 11" )
+    for ( k = 0; k < 11; k++ )
+        insertsort_a[ k ] = local_data->local_data_in.a[ k ];
 
-    _Pragma( "loopbound min 15 max 15" )
-    for ( i = 0; i < 15; ++i ) {
-        binarysearch_seed = ( ( binarysearch_seed * 133 ) + 81 );
+    /* Main entrypoint */
+    int  i, j, temp;
+    i = 2;
 
-        binarysearch_data[ i ].key = binarysearch_seed;
-        binarysearch_seed = ( ( binarysearch_seed * 133 ) + 81);
-        binarysearch_data[ i ].value = binarysearch_seed;
+    insertsort_iters_i = 0;
+
+    _Pragma( "loopbound min 9 max 9" )
+    while ( i <= 10 ) {
+
+        insertsort_iters_i++;
+
+        j = i;
+
+        insertsort_iters_a = 0;
+
+        _Pragma( "loopbound min 1 max 9" )
+        while ( insertsort_a[ j ] < insertsort_a[ j - 1 ] ) {
+        insertsort_iters_a++;
+
+        temp = insertsort_a[ j ];
+        insertsort_a[ j ] = insertsort_a[ j - 1 ];
+        insertsort_a[ j - 1 ] = temp;
+        j--;
+        }
+
+        if ( insertsort_iters_a < insertsort_min_a )
+        insertsort_min_a = insertsort_iters_a;
+        if ( insertsort_iters_a > insertsort_max_a )
+        insertsort_max_a = insertsort_iters_a;
+
+        i++;
     }
-    
-    /* End of init section */
 
-    int fvalue, mid, up, low;
+    if ( insertsort_iters_i < insertsort_min_i )
+        insertsort_min_i = insertsort_iters_i;
+    if ( insertsort_iters_i > insertsort_max_i )
+        insertsort_max_i = insertsort_iters_i;
 
-    low = 0;
-    up = 14;
-    fvalue = -1;
+    /* Return routine */
+    int in, returnValue = 0;
 
-    _Pragma( "loopbound min 1 max 4" )
-    while ( low <= up ) {
-        mid = ( low + up ) >> 1;
-
-        if ( binarysearch_data[ mid ].key == local_data->local_data_in.x) {
-        /* Item found */
-        up = low - 1;
-        fvalue = binarysearch_data[ mid ].value;
-        } else
-
-        if ( binarysearch_data[ mid ].key > local_data->local_data_in.x )
-            /* Item not found */
-            up = mid - 1;
-        else
-            low = mid + 1;
+    _Pragma( "loopbound min 11 max 11" )
+    for ( in = 0; in < 11; in++ )
+    {
+        returnValue += insertsort_a[ in ];
+        local_data->local_data_out.a[in] = insertsort_a[in];
     }
 
-    local_data->local_data_out.binary_search_result = fvalue;
+    local_data->local_data_out.return_result = ( returnValue + ( -65 ) ) != 0;
+
 }
 
 /*
@@ -107,18 +126,16 @@ void task2(subschedule_t subschedule) //add relative waiting times as a paramete
 {
     #ifdef DEBUG
         printf("Task 2 entered \n");
+        uint64_t timestamp_before_read_phase = subschedule.timestamp_func();
     #endif
-    uint64_t timestamp_before = subschedule.timestamp_func();
+
+    #ifdef TIMESTAMP
+        uint64_t timestamp_READ = subschedule.timestamp_func();
+    #endif
 
     /* Init + read routine (FLASH) */
     local_data_t local_data;
     void (*exec_copy_func)(local_data_t * local_data);
-
-    #ifdef DEBUG
-        printf("Task2 Data in (should be flash) address: %p\n", &data_in);
-        printf("Task2 Local data IN address: %p\n", &local_data.local_data_in);
-        printf("Task2 Local data OUT address: %p\n", &local_data.local_data_out);
-    #endif
 
     extern char __task2_runtime_copy_start__[],  __task2_runtime_copy_end__[];
 
@@ -126,6 +143,9 @@ void task2(subschedule_t subschedule) //add relative waiting times as a paramete
         printf("Task2 Runtime copy start: %p\n", __task2_runtime_copy_start__);
         printf("Task2 Runtime copy end: %p\n", __task2_runtime_copy_end__);
         printf("Task2 Core end used: %p\n", subschedule.exec_copy_func_dst);
+        printf("Task2 Data in (should be SRAM_5) address: %p\n", &data_in);
+        printf("Task2 Local data IN address: %p\n", &local_data.local_data_in);
+        printf("Task2 Local data OUT address: %p\n", &local_data.local_data_out);
     #endif
 
     /* Perform memcpy on data and code */
@@ -133,105 +153,56 @@ void task2(subschedule_t subschedule) //add relative waiting times as a paramete
 
     int func_size = (int) (__task2_runtime_copy_end__) - (int)(__task2_runtime_copy_start__);
 
-    #ifdef DEBUG
-        printf("Task2 exec Size: %x\n", func_size);
+    #ifdef TIMESTAMP
+        uint64_t timestamp_EXECUTE = subschedule.timestamp_func();
     #endif
-
 
     /* If multiple functions are called, multiple can be copied but destination location for following functions must be adjusted according to the size of the previous function */
     exec_copy_func = (memcpy(subschedule.exec_copy_func_dst, __task2_runtime_copy_start__, func_size) + 1); // note the +1 because the return address is even but the function must execue from an odd address (little endian)
 
     #ifdef DEBUG
-        printf("Task2 Copied func pointer: %p\n", exec_copy_func);
+        uint64_t timestamp_after_read_phase = subschedule.timestamp_func();
+        printf("Task2 copied func pointer: %p of size: %x\n", exec_copy_func, func_size);
     #endif
 
-    uint64_t timestamp_after = subschedule.timestamp_func();
-
-    printf("Task2 Setup timestamp before: %lli, after: %lli\n", timestamp_before, timestamp_after);
-
-
     /* End of Init + read routine */
-
 
     /* DELAY between task_read and task_exec functionality */
     subschedule.sleep_func(subschedule.r_to_e_wait_time);
 
-
+    #ifdef DEBUG
+        uint64_t timestamp_before_exec_phase = subschedule.timestamp_func();
+    #endif
     /* Exec routine (RAM)*/
     exec_copy_func(&local_data);
 
-    /* End of Exec routine */
-
-    subschedule.sleep_func(subschedule.e_to_w_wait_time);
-   
     #ifdef DEBUG
-        printf("Task2 Flash routine here again\n");
+        uint64_t timestamp_after_exec_phase = subschedule.timestamp_func();
     #endif
 
-    /* Write routine (FLASH)*/
+    /* End of Exec routine */
 
-    /* TMP!! 
-    * SOME PRINTS HERE TO CHECK VALUES ? */
+    /* DELAY between task_exec and task_write functionality */
+    subschedule.sleep_func(subschedule.e_to_w_wait_time);
 
-    printf("Task2 Local data out is: %d\n", local_data.local_data_out);
+    /* Write routine*/
+    #ifdef TIMESTAMP
+        uint64_t timestamp_WRITE = subschedule.timestamp_func();
+    #endif
 
+
+    memcpy(&data_out, &local_data.local_data_out, sizeof(data_out));
+
+
+   /* Note that the next time the task runs, the same (initial) input data is going to be used.
+    If that should not be the case, assign corresponding out data to input data too.
+   */
+
+    #ifdef TIMESTAMP
+        printf("Return value: %d\n", data_out.return_result);
+        uint64_t timestamp_PASS = subschedule.timestamp_func();
+        printf("\n\nCORE %d, T2\nRead: %lli, execute: %lli, write: %lli, pass: %lli \n", subschedule.cpu_id, timestamp_EXECUTE, timestamp_WRITE, timestamp_PASS);
+    #endif
 
     /* End of Write routine and end of task job, return to the scheduler */
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * static void task2_R(local_data_t * local_data)
-{
-    memcpy(&local_data->local_data_in, &global_coefficients, sizeof(global_coefficients));
-    memcpy(local_data->sram_memory, task2_E, )
-}
-
-// put this in a pragma of a specific code segment
-void task2_E(local_data_t * local_data)
-{
-    local_data->local_data_out[0] = 32;
-    // do stuff to struct->task2.local_in and struct->task2.local_out
-}
-// end the pragma
-
-static void task2_W(local_data_t * local_data)
-{
-    flash_write(local_data->)
-}
-
-    main sequence:
-
-    get CPU id for sram reference
-    void (*task2_E_RAM)(); //define a function pointer for the ram func
-
-    Perform the 3-phases
-    task2_E_RAM = task2_R(&local_data);
-
-    wait first interval R to E
-    sleep_ms(subschedule.r_to_e_wait_time);
-    *(task2_E_RAM)(&local_data);
-
-    wait second interval E to W
-    sleep_ms(subschedule.e_to_w_wait_time);
-    task2_W(&local_data);
-*/

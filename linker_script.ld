@@ -278,6 +278,22 @@ SECTIONS
     } > FLASH
     __task3_runtime_copy_source__ = LOADADDR(.task3_runtime_copy);
 
+    .task4_runtime_copy : {
+        __task4_runtime_copy_start__ = .;
+        KEEP(*(.task4_runtime_copy.*))
+        . = ALIGN(4);
+        __task4_runtime_copy_end__ = .;
+    } > FLASH
+    __task4_runtime_copy_source__ = LOADADDR(.task4_runtime_copy);
+
+    .task5_runtime_copy : {
+        __task5_runtime_copy_start__ = .;
+        KEEP(*(.task5_runtime_copy.*))
+        . = ALIGN(4);
+        __task5_runtime_copy_end__ = .;
+    } > FLASH
+    __task5_runtime_copy_source__ = LOADADDR(.task5_runtime_copy);
+
 /* THE AFOREMENTIONED LINKER DEFINITIONS MUST BE MODIFIED FOR EVERY TASK */
 
 
