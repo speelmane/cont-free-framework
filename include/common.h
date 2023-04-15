@@ -10,11 +10,11 @@
 
 #define __inline_external __attribute__((always_inline))
 
-#define TABLE_SIZE_CORE_0 3
+#define TABLE_SIZE_CORE_0 4
 #define TABLE_SIZE_CORE_1 2
 
 // #define DEBUG 0
-// #define TIMESTAMP 0
+#define TIMESTAMP 0
 
 typedef struct
 {   

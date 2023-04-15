@@ -1,0 +1,1701 @@
+
+
+CORE 0, T1
+Read: 6502180, execute: 6502282, write: 6502325, pass: 6502331
+
+
+CORE 0, T2
+Read: 12502179, execute: 12502185, write: 12502219, pass: 12502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 18502179, execute: 18502182, write: 18503274, pass: 18503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 24502179, execute: 24502186, write: 24502205, pass: 24502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 30502180, execute: 30502282, write: 30502325, pass: 30502332
+
+
+CORE 0, T2
+Read: 36502179, execute: 36502185, write: 36502219, pass: 36502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 42502179, execute: 42502182, write: 42503274, pass: 42503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 48502179, execute: 48502186, write: 48502205, pass: 48502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 54502180, execute: 54502282, write: 54502325, pass: 54502331
+
+
+CORE 0, T2
+Read: 60502179, execute: 60502185, write: 60502219, pass: 60502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 66502179, execute: 66502182, write: 66503274, pass: 66503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 72502179, execute: 72502186, write: 72502205, pass: 72502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 78502180, execute: 78502282, write: 78502325, pass: 78502332
+
+
+CORE 0, T2
+Read: 84502179, execute: 84502185, write: 84502219, pass: 84502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 90502179, execute: 90502182, write: 90503274, pass: 90503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 96502179, execute: 96502186, write: 96502205, pass: 96502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 102502180, execute: 102502282, write: 102502325, pass: 102502331
+
+
+CORE 0, T2
+Read: 108502179, execute: 108502185, write: 108502219, pass: 108502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 114502179, execute: 114502182, write: 114503274, pass: 114503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 120502179, execute: 120502186, write: 120502205, pass: 120502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 126502180, execute: 126502282, write: 126502325, pass: 126502331
+
+
+CORE 0, T2
+Read: 132502179, execute: 132502185, write: 132502219, pass: 132502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 138502179, execute: 138502182, write: 138503274, pass: 138503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 144502179, execute: 144502186, write: 144502205, pass: 144502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 150502180, execute: 150502282, write: 150502325, pass: 150502332
+
+
+CORE 0, T2
+Read: 156502179, execute: 156502185, write: 156502219, pass: 156502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 162502179, execute: 162502182, write: 162503274, pass: 162503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 168502179, execute: 168502186, write: 168502205, pass: 168502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 174502180, execute: 174502282, write: 174502325, pass: 174502332
+
+
+CORE 0, T2
+Read: 180502179, execute: 180502185, write: 180502219, pass: 180502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 186502179, execute: 186502182, write: 186503274, pass: 186503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 192502179, execute: 192502186, write: 192502205, pass: 192502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 198502180, execute: 198502282, write: 198502325, pass: 198502332
+
+
+CORE 0, T2
+Read: 204502179, execute: 204502185, write: 204502219, pass: 204502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 210502179, execute: 210502182, write: 210503274, pass: 210503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 216502179, execute: 216502186, write: 216502205, pass: 216502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 222502180, execute: 222502282, write: 222502325, pass: 222502331
+
+
+CORE 0, T2
+Read: 228502179, execute: 228502185, write: 228502219, pass: 228502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 234502179, execute: 234502182, write: 234503274, pass: 234503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 240502179, execute: 240502186, write: 240502205, pass: 240502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 246502180, execute: 246502282, write: 246502325, pass: 246502331
+
+
+CORE 0, T2
+Read: 252502179, execute: 252502185, write: 252502219, pass: 252502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 258502179, execute: 258502182, write: 258503274, pass: 258503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 264502179, execute: 264502186, write: 264502205, pass: 264502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 270502180, execute: 270502282, write: 270502325, pass: 270502331
+
+
+CORE 0, T2
+Read: 276502179, execute: 276502185, write: 276502219, pass: 276502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 282502179, execute: 282502182, write: 282503274, pass: 282503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 288502179, execute: 288502186, write: 288502205, pass: 288502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 294502180, execute: 294502282, write: 294502325, pass: 294502332
+
+
+CORE 0, T2
+Read: 300502179, execute: 300502185, write: 300502219, pass: 300502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 306502179, execute: 306502182, write: 306503274, pass: 306503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 312502179, execute: 312502186, write: 312502205, pass: 312502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 318502180, execute: 318502282, write: 318502325, pass: 318502332
+
+
+CORE 0, T2
+Read: 324502179, execute: 324502185, write: 324502219, pass: 324502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 330502179, execute: 330502182, write: 330503274, pass: 330503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 336502179, execute: 336502186, write: 336502205, pass: 336502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 342502180, execute: 342502282, write: 342502325, pass: 342502332
+
+
+CORE 0, T2
+Read: 348502179, execute: 348502185, write: 348502219, pass: 348502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 354502179, execute: 354502182, write: 354503274, pass: 354503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 360502179, execute: 360502186, write: 360502205, pass: 360502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 366502180, execute: 366502282, write: 366502325, pass: 366502331
+
+
+CORE 0, T2
+Read: 372502179, execute: 372502185, write: 372502219, pass: 372502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 378502179, execute: 378502182, write: 378503274, pass: 378503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 384502179, execute: 384502186, write: 384502205, pass: 384502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 390502180, execute: 390502282, write: 390502325, pass: 390502331
+
+
+CORE 0, T2
+Read: 396502179, execute: 396502185, write: 396502219, pass: 396502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 402502179, execute: 402502182, write: 402503274, pass: 402503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 408502179, execute: 408502186, write: 408502205, pass: 408502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 414502180, execute: 414502282, write: 414502325, pass: 414502331
+
+
+CORE 0, T2
+Read: 420502179, execute: 420502185, write: 420502219, pass: 420502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 426502179, execute: 426502182, write: 426503274, pass: 426503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 432502179, execute: 432502186, write: 432502205, pass: 432502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 438502180, execute: 438502282, write: 438502325, pass: 438502332
+
+
+CORE 0, T2
+Read: 444502179, execute: 444502185, write: 444502219, pass: 444502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 450502179, execute: 450502182, write: 450503274, pass: 450503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 456502179, execute: 456502186, write: 456502205, pass: 456502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 462502180, execute: 462502282, write: 462502325, pass: 462502332
+
+
+CORE 0, T2
+Read: 468502179, execute: 468502185, write: 468502219, pass: 468502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 474502179, execute: 474502182, write: 474503274, pass: 474503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 480502179, execute: 480502186, write: 480502205, pass: 480502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 486502180, execute: 486502282, write: 486502325, pass: 486502332
+
+
+CORE 0, T2
+Read: 492502179, execute: 492502185, write: 492502219, pass: 492502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 498502179, execute: 498502182, write: 498503274, pass: 498503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 504502179, execute: 504502186, write: 504502205, pass: 504502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 510502180, execute: 510502282, write: 510502325, pass: 510502331
+
+
+CORE 0, T2
+Read: 516502179, execute: 516502185, write: 516502219, pass: 516502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 522502179, execute: 522502182, write: 522503274, pass: 522503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 528502179, execute: 528502186, write: 528502205, pass: 528502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 534502180, execute: 534502282, write: 534502325, pass: 534502331
+
+
+CORE 0, T2
+Read: 540502179, execute: 540502185, write: 540502219, pass: 540502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 546502179, execute: 546502182, write: 546503274, pass: 546503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 552502179, execute: 552502186, write: 552502205, pass: 552502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 558502180, execute: 558502282, write: 558502325, pass: 558502331
+
+
+CORE 0, T2
+Read: 564502179, execute: 564502185, write: 564502219, pass: 564502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 570502179, execute: 570502182, write: 570503274, pass: 570503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 576502179, execute: 576502186, write: 576502205, pass: 576502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 582502180, execute: 582502282, write: 582502325, pass: 582502332
+
+
+CORE 0, T2
+Read: 588502179, execute: 588502185, write: 588502219, pass: 588502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 594502179, execute: 594502182, write: 594503274, pass: 594503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 600502179, execute: 600502186, write: 600502205, pass: 600502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 606502180, execute: 606502282, write: 606502325, pass: 606502332
+
+
+CORE 0, T2
+Read: 612502179, execute: 612502185, write: 612502219, pass: 612502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 618502179, execute: 618502182, write: 618503274, pass: 618503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 624502179, execute: 624502186, write: 624502205, pass: 624502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 630502180, execute: 630502282, write: 630502325, pass: 630502332
+
+
+CORE 0, T2
+Read: 636502179, execute: 636502185, write: 636502219, pass: 636502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 642502179, execute: 642502182, write: 642503274, pass: 642503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 648502179, execute: 648502186, write: 648502205, pass: 648502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 654502180, execute: 654502282, write: 654502325, pass: 654502331
+
+
+CORE 0, T2
+Read: 660502179, execute: 660502185, write: 660502219, pass: 660502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 666502179, execute: 666502182, write: 666503274, pass: 666503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 672502179, execute: 672502186, write: 672502205, pass: 672502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 678502180, execute: 678502282, write: 678502325, pass: 678502331
+
+
+CORE 0, T2
+Read: 684502179, execute: 684502185, write: 684502219, pass: 684502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 690502179, execute: 690502182, write: 690503274, pass: 690503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 696502179, execute: 696502186, write: 696502205, pass: 696502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 702502180, execute: 702502282, write: 702502325, pass: 702502331
+
+
+CORE 0, T2
+Read: 708502179, execute: 708502185, write: 708502219, pass: 708502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 714502179, execute: 714502182, write: 714503274, pass: 714503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 720502179, execute: 720502186, write: 720502205, pass: 720502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 726502180, execute: 726502282, write: 726502325, pass: 726502332
+
+
+CORE 0, T2
+Read: 732502179, execute: 732502185, write: 732502219, pass: 732502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 738502179, execute: 738502182, write: 738503274, pass: 738503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 744502179, execute: 744502186, write: 744502205, pass: 744502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 750502180, execute: 750502282, write: 750502325, pass: 750502332
+
+
+CORE 0, T2
+Read: 756502179, execute: 756502185, write: 756502219, pass: 756502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 762502179, execute: 762502182, write: 762503274, pass: 762503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 768502179, execute: 768502186, write: 768502205, pass: 768502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 774502180, execute: 774502282, write: 774502325, pass: 774502332
+
+
+CORE 0, T2
+Read: 780502179, execute: 780502185, write: 780502219, pass: 780502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 786502179, execute: 786502182, write: 786503274, pass: 786503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 792502179, execute: 792502186, write: 792502205, pass: 792502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 798502180, execute: 798502282, write: 798502325, pass: 798502331
+
+
+CORE 0, T2
+Read: 804502179, execute: 804502185, write: 804502219, pass: 804502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 810502179, execute: 810502182, write: 810503274, pass: 810503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 816502179, execute: 816502186, write: 816502205, pass: 816502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 822502180, execute: 822502282, write: 822502325, pass: 822502331
+
+
+CORE 0, T2
+Read: 828502179, execute: 828502185, write: 828502219, pass: 828502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 834502179, execute: 834502182, write: 834503274, pass: 834503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 840502179, execute: 840502186, write: 840502205, pass: 840502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 846502180, execute: 846502282, write: 846502325, pass: 846502331
+
+
+CORE 0, T2
+Read: 852502179, execute: 852502185, write: 852502219, pass: 852502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 858502179, execute: 858502182, write: 858503274, pass: 858503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 864502179, execute: 864502186, write: 864502205, pass: 864502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 870502180, execute: 870502282, write: 870502325, pass: 870502332
+
+
+CORE 0, T2
+Read: 876502179, execute: 876502185, write: 876502219, pass: 876502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 882502179, execute: 882502182, write: 882503274, pass: 882503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 888502179, execute: 888502186, write: 888502205, pass: 888502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 894502180, execute: 894502282, write: 894502325, pass: 894502332
+
+
+CORE 0, T2
+Read: 900502179, execute: 900502185, write: 900502219, pass: 900502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 906502179, execute: 906502182, write: 906503274, pass: 906503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 912502179, execute: 912502186, write: 912502205, pass: 912502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 918502180, execute: 918502282, write: 918502325, pass: 918502332
+
+
+CORE 0, T2
+Read: 924502179, execute: 924502185, write: 924502219, pass: 924502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 930502179, execute: 930502182, write: 930503274, pass: 930503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 936502179, execute: 936502186, write: 936502205, pass: 936502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 942502180, execute: 942502282, write: 942502325, pass: 942502331
+
+
+CORE 0, T2
+Read: 948502179, execute: 948502185, write: 948502219, pass: 948502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 954502179, execute: 954502182, write: 954503274, pass: 954503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 960502179, execute: 960502186, write: 960502205, pass: 960502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 966502180, execute: 966502282, write: 966502325, pass: 966502331
+
+
+CORE 0, T2
+Read: 972502179, execute: 972502185, write: 972502219, pass: 972502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 978502179, execute: 978502182, write: 978503274, pass: 978503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 984502179, execute: 984502186, write: 984502205, pass: 984502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 990502180, execute: 990502282, write: 990502325, pass: 990502331
+
+
+CORE 0, T2
+Read: 996502179, execute: 996502185, write: 996502219, pass: 996502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1002502179, execute: 1002502182, write: 1002503274, pass: 1002503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1008502179, execute: 1008502186, write: 1008502205, pass: 1008502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1014502180, execute: 1014502282, write: 1014502325, pass: 1014502331
+
+
+CORE 0, T2
+Read: 1020502179, execute: 1020502185, write: 1020502219, pass: 1020502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1026502179, execute: 1026502182, write: 1026503274, pass: 1026503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1032502179, execute: 1032502186, write: 1032502205, pass: 1032502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1038502180, execute: 1038502282, write: 1038502325, pass: 1038502332
+
+
+CORE 0, T2
+Read: 1044502179, execute: 1044502185, write: 1044502219, pass: 1044502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1050502179, execute: 1050502182, write: 1050503274, pass: 1050503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1056502179, execute: 1056502186, write: 1056502205, pass: 1056502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1062502180, execute: 1062502282, write: 1062502325, pass: 1062502332
+
+
+CORE 0, T2
+Read: 1068502179, execute: 1068502185, write: 1068502219, pass: 1068502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1074502179, execute: 1074502182, write: 1074503274, pass: 1074503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1080502179, execute: 1080502186, write: 1080502205, pass: 1080502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1086502180, execute: 1086502282, write: 1086502325, pass: 1086502332
+
+
+CORE 0, T2
+Read: 1092502179, execute: 1092502185, write: 1092502219, pass: 1092502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1098502179, execute: 1098502182, write: 1098503274, pass: 1098503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1104502179, execute: 1104502186, write: 1104502205, pass: 1104502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1110502180, execute: 1110502282, write: 1110502325, pass: 1110502332
+
+
+CORE 0, T2
+Read: 1116502179, execute: 1116502185, write: 1116502219, pass: 1116502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1122502179, execute: 1122502182, write: 1122503274, pass: 1122503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1128502179, execute: 1128502186, write: 1128502205, pass: 1128502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1134502180, execute: 1134502282, write: 1134502325, pass: 1134502332
+
+
+CORE 0, T2
+Read: 1140502179, execute: 1140502185, write: 1140502219, pass: 1140502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1146502179, execute: 1146502182, write: 1146503274, pass: 1146503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1152502179, execute: 1152502186, write: 1152502205, pass: 1152502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1158502180, execute: 1158502282, write: 1158502325, pass: 1158502332
+
+
+CORE 0, T2
+Read: 1164502179, execute: 1164502185, write: 1164502219, pass: 1164502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1170502179, execute: 1170502182, write: 1170503274, pass: 1170503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1176502179, execute: 1176502186, write: 1176502205, pass: 1176502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1182502180, execute: 1182502282, write: 1182502325, pass: 1182502332
+
+
+CORE 0, T2
+Read: 1188502179, execute: 1188502185, write: 1188502219, pass: 1188502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1194502179, execute: 1194502182, write: 1194503274, pass: 1194503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1200502179, execute: 1200502186, write: 1200502205, pass: 1200502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1206502180, execute: 1206502282, write: 1206502325, pass: 1206502332
+
+
+CORE 0, T2
+Read: 1212502179, execute: 1212502185, write: 1212502219, pass: 1212502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1218502179, execute: 1218502182, write: 1218503274, pass: 1218503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1224502179, execute: 1224502186, write: 1224502205, pass: 1224502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1230502180, execute: 1230502282, write: 1230502325, pass: 1230502332
+
+
+CORE 0, T2
+Read: 1236502179, execute: 1236502185, write: 1236502219, pass: 1236502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1242502179, execute: 1242502182, write: 1242503274, pass: 1242503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1248502179, execute: 1248502186, write: 1248502205, pass: 1248502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1254502180, execute: 1254502282, write: 1254502325, pass: 1254502332
+
+
+CORE 0, T2
+Read: 1260502179, execute: 1260502185, write: 1260502219, pass: 1260502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1266502179, execute: 1266502182, write: 1266503274, pass: 1266503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1272502179, execute: 1272502186, write: 1272502205, pass: 1272502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1278502180, execute: 1278502282, write: 1278502325, pass: 1278502332
+
+
+CORE 0, T2
+Read: 1284502179, execute: 1284502185, write: 1284502219, pass: 1284502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1290502179, execute: 1290502182, write: 1290503274, pass: 1290503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1296502179, execute: 1296502186, write: 1296502205, pass: 1296502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1302502180, execute: 1302502282, write: 1302502325, pass: 1302502332
+
+
+CORE 0, T2
+Read: 1308502179, execute: 1308502185, write: 1308502219, pass: 1308502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1314502179, execute: 1314502182, write: 1314503274, pass: 1314503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1320502179, execute: 1320502186, write: 1320502205, pass: 1320502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1326502180, execute: 1326502282, write: 1326502325, pass: 1326502332
+
+
+CORE 0, T2
+Read: 1332502179, execute: 1332502185, write: 1332502219, pass: 1332502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1338502179, execute: 1338502182, write: 1338503274, pass: 1338503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1344502179, execute: 1344502186, write: 1344502205, pass: 1344502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1350502180, execute: 1350502282, write: 1350502325, pass: 1350502332
+
+
+CORE 0, T2
+Read: 1356502179, execute: 1356502185, write: 1356502219, pass: 1356502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1362502179, execute: 1362502182, write: 1362503274, pass: 1362503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1368502179, execute: 1368502186, write: 1368502205, pass: 1368502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1374502180, execute: 1374502282, write: 1374502325, pass: 1374502332
+
+
+CORE 0, T2
+Read: 1380502179, execute: 1380502185, write: 1380502219, pass: 1380502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1386502179, execute: 1386502182, write: 1386503274, pass: 1386503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1392502179, execute: 1392502186, write: 1392502205, pass: 1392502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1398502180, execute: 1398502282, write: 1398502325, pass: 1398502331
+
+
+CORE 0, T2
+Read: 1404502179, execute: 1404502185, write: 1404502219, pass: 1404502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1410502179, execute: 1410502182, write: 1410503274, pass: 1410503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1416502179, execute: 1416502186, write: 1416502205, pass: 1416502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1422502180, execute: 1422502282, write: 1422502325, pass: 1422502332
+
+
+CORE 0, T2
+Read: 1428502179, execute: 1428502185, write: 1428502219, pass: 1428502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1434502179, execute: 1434502182, write: 1434503274, pass: 1434503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1440502179, execute: 1440502186, write: 1440502205, pass: 1440502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1446502180, execute: 1446502282, write: 1446502325, pass: 1446502332
+
+
+CORE 0, T2
+Read: 1452502179, execute: 1452502185, write: 1452502219, pass: 1452502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1458502179, execute: 1458502182, write: 1458503274, pass: 1458503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1464502179, execute: 1464502186, write: 1464502205, pass: 1464502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1470502180, execute: 1470502282, write: 1470502325, pass: 1470502331
+
+
+CORE 0, T2
+Read: 1476502179, execute: 1476502185, write: 1476502219, pass: 1476502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1482502179, execute: 1482502182, write: 1482503274, pass: 1482503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1488502179, execute: 1488502186, write: 1488502205, pass: 1488502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1494502180, execute: 1494502282, write: 1494502325, pass: 1494502332
+
+
+CORE 0, T2
+Read: 1500502179, execute: 1500502185, write: 1500502219, pass: 1500502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1506502179, execute: 1506502182, write: 1506503274, pass: 1506503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1512502179, execute: 1512502186, write: 1512502205, pass: 1512502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1518502180, execute: 1518502282, write: 1518502325, pass: 1518502332
+
+
+CORE 0, T2
+Read: 1524502179, execute: 1524502185, write: 1524502219, pass: 1524502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1530502179, execute: 1530502182, write: 1530503274, pass: 1530503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1536502179, execute: 1536502186, write: 1536502205, pass: 1536502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1542502180, execute: 1542502282, write: 1542502325, pass: 1542502331
+
+
+CORE 0, T2
+Read: 1548502179, execute: 1548502185, write: 1548502219, pass: 1548502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1554502179, execute: 1554502182, write: 1554503274, pass: 1554503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1560502179, execute: 1560502186, write: 1560502205, pass: 1560502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1566502180, execute: 1566502282, write: 1566502325, pass: 1566502332
+
+
+CORE 0, T2
+Read: 1572502179, execute: 1572502185, write: 1572502219, pass: 1572502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1578502179, execute: 1578502182, write: 1578503274, pass: 1578503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1584502179, execute: 1584502186, write: 1584502205, pass: 1584502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1590502180, execute: 1590502282, write: 1590502325, pass: 1590502332
+
+
+CORE 0, T2
+Read: 1596502179, execute: 1596502185, write: 1596502219, pass: 1596502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1602502179, execute: 1602502182, write: 1602503274, pass: 1602503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1608502179, execute: 1608502186, write: 1608502205, pass: 1608502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1614502180, execute: 1614502282, write: 1614502325, pass: 1614502331
+
+
+CORE 0, T2
+Read: 1620502179, execute: 1620502185, write: 1620502219, pass: 1620502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1626502179, execute: 1626502182, write: 1626503274, pass: 1626503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1632502179, execute: 1632502186, write: 1632502205, pass: 1632502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1638502180, execute: 1638502282, write: 1638502325, pass: 1638502332
+
+
+CORE 0, T2
+Read: 1644502179, execute: 1644502185, write: 1644502219, pass: 1644502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1650502179, execute: 1650502182, write: 1650503274, pass: 1650503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1656502179, execute: 1656502186, write: 1656502205, pass: 1656502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1662502180, execute: 1662502282, write: 1662502325, pass: 1662502332
+
+
+CORE 0, T2
+Read: 1668502179, execute: 1668502185, write: 1668502219, pass: 1668502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1674502179, execute: 1674502182, write: 1674503274, pass: 1674503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1680502179, execute: 1680502186, write: 1680502205, pass: 1680502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1686502180, execute: 1686502282, write: 1686502325, pass: 1686502331
+
+
+CORE 0, T2
+Read: 1692502179, execute: 1692502185, write: 1692502219, pass: 1692502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1698502179, execute: 1698502182, write: 1698503274, pass: 1698503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1704502179, execute: 1704502186, write: 1704502205, pass: 1704502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1710502180, execute: 1710502282, write: 1710502325, pass: 1710502332
+
+
+CORE 0, T2
+Read: 1716502179, execute: 1716502185, write: 1716502219, pass: 1716502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1722502179, execute: 1722502182, write: 1722503274, pass: 1722503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1728502179, execute: 1728502186, write: 1728502205, pass: 1728502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1734502180, execute: 1734502282, write: 1734502325, pass: 1734502332
+
+
+CORE 0, T2
+Read: 1740502179, execute: 1740502185, write: 1740502219, pass: 1740502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1746502179, execute: 1746502182, write: 1746503274, pass: 1746503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1752502179, execute: 1752502186, write: 1752502205, pass: 1752502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1758502180, execute: 1758502282, write: 1758502325, pass: 1758502331
+
+
+CORE 0, T2
+Read: 1764502179, execute: 1764502185, write: 1764502219, pass: 1764502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1770502179, execute: 1770502182, write: 1770503274, pass: 1770503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1776502179, execute: 1776502186, write: 1776502205, pass: 1776502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1782502180, execute: 1782502282, write: 1782502325, pass: 1782502332
+
+
+CORE 0, T2
+Read: 1788502179, execute: 1788502185, write: 1788502219, pass: 1788502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1794502179, execute: 1794502182, write: 1794503274, pass: 1794503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1800502179, execute: 1800502186, write: 1800502205, pass: 1800502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1806502180, execute: 1806502282, write: 1806502325, pass: 1806502332
+
+
+CORE 0, T2
+Read: 1812502179, execute: 1812502185, write: 1812502219, pass: 1812502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1818502179, execute: 1818502182, write: 1818503274, pass: 1818503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1824502179, execute: 1824502186, write: 1824502205, pass: 1824502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1830502180, execute: 1830502282, write: 1830502325, pass: 1830502331
+
+
+CORE 0, T2
+Read: 1836502179, execute: 1836502185, write: 1836502219, pass: 1836502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1842502179, execute: 1842502182, write: 1842503274, pass: 1842503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1848502179, execute: 1848502186, write: 1848502205, pass: 1848502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1854502180, execute: 1854502282, write: 1854502325, pass: 1854502332
+
+
+CORE 0, T2
+Read: 1860502179, execute: 1860502185, write: 1860502219, pass: 1860502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1866502179, execute: 1866502182, write: 1866503274, pass: 1866503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1872502179, execute: 1872502186, write: 1872502205, pass: 1872502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1878502180, execute: 1878502282, write: 1878502325, pass: 1878502332
+
+
+CORE 0, T2
+Read: 1884502179, execute: 1884502185, write: 1884502219, pass: 1884502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1890502179, execute: 1890502182, write: 1890503274, pass: 1890503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1896502179, execute: 1896502186, write: 1896502205, pass: 1896502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1902502180, execute: 1902502282, write: 1902502325, pass: 1902502331
+
+
+CORE 0, T2
+Read: 1908502179, execute: 1908502185, write: 1908502219, pass: 1908502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1914502179, execute: 1914502182, write: 1914503274, pass: 1914503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1920502179, execute: 1920502186, write: 1920502205, pass: 1920502206
+Binary search result: 0
+Perf counter in loop: 0
+
+
+
+CORE 0, T1
+Read: 1926502180, execute: 1926502282, write: 1926502325, pass: 1926502331
+
+
+CORE 0, T2
+Read: 1932502179, execute: 1932502185, write: 1932502219, pass: 1932502222
+Return value: 0
+
+
+CORE 0, T3
+Read: 1938502179, execute: 1938502182, write: 1938503274, pass: 1938503282
+Return value: 0
+
+
+CORE 0, T4
+Read: 1944502179, execute: 1944502186, write: 1944502205, pass: 1944502206
+Binary search result: 0
+Perf counter in loop: 0
+

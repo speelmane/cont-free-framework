@@ -7,10 +7,10 @@ void __core_0_code("tablefill")(fill_schedule_core_0)(table_entry_t table[])
     /*
         All time elements, if used, are interpreted in us
     */
-    uint64_t scheduled_wait_time_array[TABLE_SIZE_CORE_0] = {6000000, 8000000, 8000000}; //500 ms, 600 ms
-    uint64_t r_to_e_wait_time_array[TABLE_SIZE_CORE_0] = {100, 100, 100}; 
-    uint64_t e_to_w_wait_time_array[TABLE_SIZE_CORE_0] = {100, 100, 100};
-    void (* task_array[TABLE_SIZE_CORE_0])(subschedule_t) = {task1, task2, task3};
+    uint64_t scheduled_wait_time_array[TABLE_SIZE_CORE_0] = {6000000, 6000000, 6000000, 6000000}; //500 ms, 600 ms
+    uint64_t r_to_e_wait_time_array[TABLE_SIZE_CORE_0] = {100, 100, 100, 100}; 
+    uint64_t e_to_w_wait_time_array[TABLE_SIZE_CORE_0] = {100, 100, 100, 100};
+    void (* task_array[TABLE_SIZE_CORE_0])(subschedule_t) = {task1, task2, task3, task4};
 
 
     extern char __core_0_code_end__[];

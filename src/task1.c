@@ -259,7 +259,7 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
     /* End of Init + read routine */
 
     /* DELAY between task_read and task_exec functionality */
-    subschedule.sleep_func(subschedule.r_to_e_wait_time);
+    // subschedule.sleep_func(subschedule.r_to_e_wait_time);
 
     /* Exec routine (RAM)*/
 
@@ -272,7 +272,7 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
     /* End of Exec routine */
 
     /* DELAY between task_exec and task_write functionality */
-    subschedule.sleep_func(subschedule.e_to_w_wait_time);
+    // subschedule.sleep_func(subschedule.e_to_w_wait_time);
 
     /* Write routine*/
     #ifdef TIMESTAMP
@@ -290,7 +290,7 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
 
     #ifdef TIMESTAMP
         uint64_t timestamp_PASS = subschedule.timestamp_func();
-        printf("\n\nCORE %d, T1\nRead: %lli, execute: %lli, write: %lli, pass: %lli\n", subschedule.cpu_id, timestamp_EXECUTE, timestamp_WRITE, timestamp_PASS);
+        printf("\n\nCORE %d, T1\nRead: %lli, execute: %lli, write: %lli, pass: %lli\n", subschedule.cpu_id, timestamp_READ, timestamp_EXECUTE, timestamp_WRITE, timestamp_PASS);
     #endif
 
     /* End of Write routine and end of task job, return to the scheduler */

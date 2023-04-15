@@ -69,7 +69,7 @@ void main_core_1(void)
 int main() {
     stdio_init_all();
     system_init();
-    multicore_lauch_core1_separate_vtor_table(main_core_1, (uint32_t) vector_table_core_1);
+    // multicore_lauch_core1_separate_vtor_table(main_core_1, (uint32_t) vector_table_core_1);
 
     //wait slightly to ensure core 1 is def set up
     sleep_ms_core_0(500000);
