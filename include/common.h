@@ -10,11 +10,8 @@
 
 #define __inline_external __attribute__((always_inline))
 
-#define TABLE_SIZE_CORE_0 4
-#define TABLE_SIZE_CORE_1 2
-
 // #define DEBUG 0
-#define TIMESTAMP 0
+// #define TIMESTAMP 0
 
 typedef struct
 {   
@@ -25,13 +22,6 @@ typedef struct
     int64_t r_to_e_wait_time;
     int64_t e_to_w_wait_time;
 } subschedule_t;
-
-typedef struct
-{
-    int64_t scheduled_wait_time;
-    void (* task)(subschedule_t subschedule);
-    subschedule_t subschedule;
-} table_entry_t;
 
 
 /* All task prototypes */
@@ -44,11 +34,6 @@ void task3(subschedule_t subschedule);
 void task4(subschedule_t subschedule);
 
 // void task5(subschedule_t subschedule);
-
-
-void fill_schedule_core_0(table_entry_t table[]);
-
-void fill_schedule_core_1(table_entry_t table[]);
 
 
 #endif /*COMMON*/

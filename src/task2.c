@@ -119,8 +119,10 @@ void __task2_runtime_copy("task2")(task2_E)(local_data_t * local_data)
 
 }
 
-/*
-    This will execute from the flash, except for the task_exec function
+/* This will execute from the flash, except for the task_exec function
+*  Future implementation: subschedule the phases - 
+*  DELAY between task_read and task_exec functionality 
+*  subschedule.sleep_func(subschedule.r_to_e_wait_time)
 */
 void task2(subschedule_t subschedule) //add relative waiting times as a parameter here
 {
@@ -139,7 +141,17 @@ void task2(subschedule_t subschedule) //add relative waiting times as a paramete
 
     extern char __task2_runtime_copy_start__[],  __task2_runtime_copy_end__[];
 
+    /* Perform memcpy on data and code */
+    memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
+
+    int func_size = (int) (__task2_runtime_copy_end__) - (int)(__task2_runtime_copy_start__);
+
+    /* If multiple functions are called, multiple can be copied but destination location for following functions must be adjusted according to the size of the previous function */
+    exec_copy_func = (memcpy(subschedule.exec_copy_func_dst, __task2_runtime_copy_start__, func_size) + 1); // note the +1 because the return address is even but the function must execue from an odd address (little endian)
+
     #ifdef DEBUG
+        uint64_t timestamp_after_read_phase = subschedule.timestamp_func();
+        printf("Task2 copied func pointer: %p of size: %x\n", exec_copy_func, func_size);
         printf("Task2 Runtime copy start: %p\n", __task2_runtime_copy_start__);
         printf("Task2 Runtime copy end: %p\n", __task2_runtime_copy_end__);
         printf("Task2 Core end used: %p\n", subschedule.exec_copy_func_dst);
@@ -148,50 +160,24 @@ void task2(subschedule_t subschedule) //add relative waiting times as a paramete
         printf("Task2 Local data OUT address: %p\n", &local_data.local_data_out);
     #endif
 
-    /* Perform memcpy on data and code */
-    memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
-
-    int func_size = (int) (__task2_runtime_copy_end__) - (int)(__task2_runtime_copy_start__);
+    /* End of Init + read routine */
 
     #ifdef TIMESTAMP
         uint64_t timestamp_EXECUTE = subschedule.timestamp_func();
     #endif
-
-    /* If multiple functions are called, multiple can be copied but destination location for following functions must be adjusted according to the size of the previous function */
-    exec_copy_func = (memcpy(subschedule.exec_copy_func_dst, __task2_runtime_copy_start__, func_size) + 1); // note the +1 because the return address is even but the function must execue from an odd address (little endian)
-
-    #ifdef DEBUG
-        uint64_t timestamp_after_read_phase = subschedule.timestamp_func();
-        printf("Task2 copied func pointer: %p of size: %x\n", exec_copy_func, func_size);
-    #endif
-
-    /* End of Init + read routine */
-
-    /* DELAY between task_read and task_exec functionality */
-    // subschedule.sleep_func(subschedule.r_to_e_wait_time);
-
-    #ifdef DEBUG
-        uint64_t timestamp_before_exec_phase = subschedule.timestamp_func();
-    #endif
+    
     /* Exec routine (RAM)*/
     exec_copy_func(&local_data);
-
-    #ifdef DEBUG
-        uint64_t timestamp_after_exec_phase = subschedule.timestamp_func();
-    #endif
-
     /* End of Exec routine */
 
-    /* DELAY between task_exec and task_write functionality */
-    // subschedule.sleep_func(subschedule.e_to_w_wait_time);
-
-    /* Write routine*/
     #ifdef TIMESTAMP
         uint64_t timestamp_WRITE = subschedule.timestamp_func();
     #endif
 
-
+    /* Write routine*/
     memcpy(&data_out, &local_data.local_data_out, sizeof(data_out));
+    /* End of Write routine*/
+
 
 
    /* Note that the next time the task runs, the same (initial) input data is going to be used.

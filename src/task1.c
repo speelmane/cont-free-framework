@@ -216,9 +216,15 @@ void __task1_runtime_copy("task1")(task1_E)(local_data_t * local_data)
     local_data->local_data_out.transformation_result = ( ( checksum == local_data->local_data_in.checksum ) ? 0 : -1 );
 }
 
-/* This will execute from the flash, except for the task_exec function*/
+/* This will execute from the flash, except for the task_exec function
+*  Future implementation: subschedule the phases - 
+*  DELAY between task_read and task_exec functionality 
+*  subschedule.sleep_func(subschedule.r_to_e_wait_time)
+*/
 void task1(subschedule_t subschedule) //add relative waiting times as a parameter here
 {
+
+
     #ifdef DEBUG
         printf("Task 1 entered \n");
     #endif
@@ -227,12 +233,19 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
         uint64_t timestamp_READ = subschedule.timestamp_func();
     #endif
 
-
     /* Init + read routine (FLASH) */
     local_data_t local_data;
     void (*exec_copy_func)(local_data_t * local_data);
 
     extern char __task1_runtime_copy_start__[],  __task1_runtime_copy_end__[];
+
+    /* Perform memcpy on data and code */
+    memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
+
+    int func_size = (int) (__task1_runtime_copy_end__) - (int)(__task1_runtime_copy_start__);
+
+    /* If multiple functions are called, multiple can be copied but destination location for following functions must be adjusted according to the size of the previous function */
+    exec_copy_func = (memcpy(subschedule.exec_copy_func_dst, __task1_runtime_copy_start__, func_size) + 1); // note the +1 because the return address is even but code must execute from an odd address (little endian)
 
     #ifdef DEBUG
         printf("Task1 Runtime copy start: %p\n", __task1_runtime_copy_start__);
@@ -241,56 +254,32 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
         printf("Task1 Data in (should be SRAM_5) address: %p\n", &data_in);
         printf("Task1 Local data IN address: %p\n", &local_data.local_data_in);
         printf("Task1 Local data OUT address: %p\n", &local_data.local_data_out);
-    #endif
-
-    /* Perform memcpy on data and code */
-    memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
-
-    int func_size = (int) (__task1_runtime_copy_end__) - (int)(__task1_runtime_copy_start__);
-
-    /* If multiple functions are called, multiple can be copied but destination location for following functions must be adjusted according to the size of the previous function */
-    exec_copy_func = (memcpy(subschedule.exec_copy_func_dst, __task1_runtime_copy_start__, func_size) + 1); // note the +1 because the return address is even but the function must execue from an odd address (little endian)
-
-    #ifdef DEBUG
         printf("Task1 copied func pointer: %p of size: %x\n", exec_copy_func, func_size);
-        uint64_t timestamp_after_read_phase = subschedule.timestamp_func();
     #endif
 
     /* End of Init + read routine */
-
-    /* DELAY between task_read and task_exec functionality */
-    // subschedule.sleep_func(subschedule.r_to_e_wait_time);
-
-    /* Exec routine (RAM)*/
 
     #ifdef TIMESTAMP
         uint64_t timestamp_EXECUTE = subschedule.timestamp_func();
     #endif
 
+    /* Exec routine (RAM)*/
     exec_copy_func(&local_data);
-
     /* End of Exec routine */
 
-    /* DELAY between task_exec and task_write functionality */
-    // subschedule.sleep_func(subschedule.e_to_w_wait_time);
-
-    /* Write routine*/
     #ifdef TIMESTAMP
         uint64_t timestamp_WRITE = subschedule.timestamp_func();
     #endif
 
-
+    /* Write routine*/
     memcpy(&data_out, &local_data.local_data_out, sizeof(data_out));
-
-
-   /* Note that the next time the task runs, the same (initial) input data is going to be used.
-    If that should not be the case, assign corresponding out data to input data too.
-   */
+    /* End of Write routine*/
 
 
     #ifdef TIMESTAMP
         uint64_t timestamp_PASS = subschedule.timestamp_func();
         printf("\n\nCORE %d, T1\nRead: %lli, execute: %lli, write: %lli, pass: %lli\n", subschedule.cpu_id, timestamp_READ, timestamp_EXECUTE, timestamp_WRITE, timestamp_PASS);
+        printf("Return value: %d\n", data_out.transformation_result);
     #endif
 
     /* End of Write routine and end of task job, return to the scheduler */

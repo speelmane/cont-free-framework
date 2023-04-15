@@ -12,6 +12,8 @@
 #include "pico/sem.h"
 #include "pico/platform.h"
 #include "hardware/structs/scb.h"
+#include "schedule.h"
+
 
 /* Bus performance counters, nr 0 reserved for XIP access counting, the rest can verify other contention sources if that is the wish */
 #define bus_perf_0_hw ((bus_ctrl_perf_hw_t *)(BUSCTRL_BASE + BUSCTRL_PERFCTR0_OFFSET))
@@ -23,12 +25,17 @@
 #define ALARM_CORE_0 0
 #define ALARM_CORE_1 1
 
+
 #define ALARM_IRQ_CORE_0 TIMER_IRQ_0
 #define ALARM_IRQ_CORE_1 TIMER_IRQ_1
 
 /* By default the cores should wait until the flag is cleared */
 __core_0_data("flag") char volatile alarm_flag_core_0 = false;
 __core_1_data("flag") char volatile alarm_flag_core_1 = false;
+
+
+__core_0_data("loops") uint64_t volatile target_core_0 = SCHEDULE_OFFSET + START_OFFSET_CORE_0;
+__core_1_data("loops") uint64_t volatile target_core_1 = SCHEDULE_OFFSET + START_OFFSET_CORE_1;
 
 __core_0_data("table") table_entry_t schedule_table_core_0[TABLE_SIZE_CORE_0];
 __core_1_data("table") table_entry_t schedule_table_core_1[TABLE_SIZE_CORE_1];
@@ -69,7 +76,7 @@ void main_core_1(void)
 int main() {
     stdio_init_all();
     system_init();
-    // multicore_lauch_core1_separate_vtor_table(main_core_1, (uint32_t) vector_table_core_1);
+    multicore_lauch_core1_separate_vtor_table(main_core_1, (uint32_t) vector_table_core_1);
 
     //wait slightly to ensure core 1 is def set up
     sleep_ms_core_0(500000);
@@ -106,6 +113,9 @@ void system_init()
     /* Counter init to count contested accesses */ 
     bus_perf_0_hw->sel = arbiter_xip_main_perf_event_access_contested;
     bus_perf_1_hw->sel = arbiter_sram5_perf_event_access_contested;
+    bus_perf_2_hw->sel = arbiter_xip_main_perf_event_access;
+
+
 
     /* Semaphore init */
     sem_init(&sync_sem, 0, 1);
@@ -124,12 +134,12 @@ void system_init()
 */
 void __core_0_code("scheduler")(scheduler_core_0)(table_entry_t table[])
 {
+    /* Release the first task here */
+    timer_hw->alarm[ALARM_CORE_0] = (uint32_t) target_core_0;
+
     // reset the counter
     bus_perf_0_hw->value = 0;
-
-    /* Release the first task here */
-    uint64_t target = timer_hw->timerawl + table[0].scheduled_wait_time;
-    timer_hw->alarm[ALARM_CORE_0] = (uint32_t) target;
+    bus_perf_1_hw->value = 0;
 
     while(1)
     {
@@ -140,7 +150,10 @@ void __core_0_code("scheduler")(scheduler_core_0)(table_entry_t table[])
             table[i].task(table[i].subschedule);
         }
 
-        printf("Perf counter in loop: %d\n\n", bus_perf_0_hw->value);
+        // printf("XIP perf counter: %d\n\n", bus_perf_0_hw->value);
+        // printf("SRAM_5 perf counter: %d\n\n", bus_perf_1_hw->value);
+
+
     }
 }
 
@@ -152,10 +165,8 @@ void __core_0_code("scheduler")(scheduler_core_0)(table_entry_t table[])
 */
 void __core_1_code("scheduler")(scheduler_core_1)(table_entry_t table[])
 {
-    uint64_t target = timer_hw->timerawl + table[0].scheduled_wait_time;
-
     // Write the lower 32 bits of the target time to the alarm which will arm it
-    timer_hw->alarm[ALARM_CORE_1] = (uint32_t) target;
+    timer_hw->alarm[ALARM_CORE_1] = (uint32_t) target_core_1;
 
     while(1)
     {
@@ -172,12 +183,9 @@ static void __core_0_code("irq")(alarm_irq_core_0)(void) {
     // Clear the alarm irq
     hw_clear_bits(&timer_hw->intr, 1u << ALARM_CORE_0);
 
-    static int task_counter = 0;
-
-    // Assume alarm 0 has fired
-    // printf("Alarm IRQ CORE 0 fired, ts: %d\n", task_counter);
-
     alarm_flag_core_0 = true;
+
+    static int task_counter = 0;
 
     if(task_counter < (TABLE_SIZE_CORE_0 - 1) )
     {
@@ -188,22 +196,20 @@ static void __core_0_code("irq")(alarm_irq_core_0)(void) {
         task_counter = 0;
     }
 
-    uint64_t target = timer_hw->timerawl + schedule_table_core_0[task_counter].scheduled_wait_time;
+    target_core_0 += schedule_table_core_0[task_counter].scheduled_wait_time;
 
     // Write the lower 32 bits of the target time to the alarm which will arm it
-    timer_hw->alarm[ALARM_CORE_0] = (uint32_t) target;
+    timer_hw->alarm[ALARM_CORE_0] = (uint32_t) target_core_0;
+
 }
 
 static void __core_1_code("irq")(alarm_irq_core_1)(void) {
     // Clear the alarm irq
     hw_clear_bits(&timer_hw->intr, 1u << ALARM_CORE_1);
 
-    static int task_counter = 0;
-
-
-    // Assume alarm 1 has fired
-    // printf("Alarm IRQ CORE 1 fired, ts: %d\n", task_counter);
     alarm_flag_core_1 = true;
+
+    static int task_counter = 0;
 
     if(task_counter < (TABLE_SIZE_CORE_1 - 1) )
     {
@@ -214,18 +220,9 @@ static void __core_1_code("irq")(alarm_irq_core_1)(void) {
         task_counter = 0;
     }
 
-    uint64_t target = timer_hw->timerawl + schedule_table_core_1[task_counter].scheduled_wait_time;
+    target_core_1 += schedule_table_core_1[task_counter].scheduled_wait_time;
 
     // Write the lower 32 bits of the target time to the alarm which will arm it
-    timer_hw->alarm[ALARM_CORE_1] = (uint32_t) target;
+    timer_hw->alarm[ALARM_CORE_1] = (uint32_t) target_core_1;
+
 }
-
-
-        // // pure ram code
-        // int a = 5;
-        // for (int i = 0; i< 1024; i++)
-        // {
-        //     a+=(i+2);
-        // }
-        // a--;
-        // sleep_ms_core_1(5000);

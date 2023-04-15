@@ -1,16 +1,17 @@
 #include "common.h"
 #include "stdint.h"
 #include "timer_functions.h"
+#include "schedule.h"
 
 void __core_0_code("tablefill")(fill_schedule_core_0)(table_entry_t table[])
 {
     /*
         All time elements, if used, are interpreted in us
     */
-    uint64_t scheduled_wait_time_array[TABLE_SIZE_CORE_0] = {6000000, 6000000, 6000000, 6000000}; //500 ms, 600 ms
-    uint64_t r_to_e_wait_time_array[TABLE_SIZE_CORE_0] = {100, 100, 100, 100}; 
-    uint64_t e_to_w_wait_time_array[TABLE_SIZE_CORE_0] = {100, 100, 100, 100};
-    void (* task_array[TABLE_SIZE_CORE_0])(subschedule_t) = {task1, task2, task3, task4};
+    uint64_t scheduled_wait_time_array[TABLE_SIZE_CORE_0] = {550, 200, 50, 100, 200, 300, 500, 100}; //500 ms, 600 ms
+    uint64_t r_to_e_wait_time_array[TABLE_SIZE_CORE_0] = {0}; 
+    uint64_t e_to_w_wait_time_array[TABLE_SIZE_CORE_0] = {0};
+    void (* task_array[TABLE_SIZE_CORE_0])(subschedule_t) = {task1, task4, task2, task1, task4, task4, task2, task1};
 
 
     extern char __core_0_code_end__[];
@@ -39,10 +40,10 @@ void __core_1_code("tablefill")(fill_schedule_core_1)(table_entry_t table[])
     /*
         All time elements, if used, are interpreted in us
     */
-    uint64_t scheduled_wait_time_array[TABLE_SIZE_CORE_1] = {5000000, 7000000}; //500 ms, 600 ms
-    uint64_t r_to_e_wait_time_array[TABLE_SIZE_CORE_1] = {200, 200}; //10 and 30 ms
-    uint64_t e_to_w_wait_time_array[TABLE_SIZE_CORE_1] = {200, 200}; //20 and 40 ms
-    void (* task_array[TABLE_SIZE_CORE_1])(subschedule_t) = {task1, task3};
+    uint64_t scheduled_wait_time_array[TABLE_SIZE_CORE_1] = {550, 1250, 200}; //500 ms, 600 ms
+    uint64_t r_to_e_wait_time_array[TABLE_SIZE_CORE_1] = {0}; 
+    uint64_t e_to_w_wait_time_array[TABLE_SIZE_CORE_1] = {0}; 
+    void (* task_array[TABLE_SIZE_CORE_1])(subschedule_t) = {task3, task1, task4};
 
 
     extern char __core_1_code_end__[];
