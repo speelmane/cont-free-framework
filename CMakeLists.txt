@@ -24,7 +24,6 @@ target_sources(${PROJECT_NAME} PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/src/task2.c
         ${CMAKE_CURRENT_LIST_DIR}/src/task3.c
         ${CMAKE_CURRENT_LIST_DIR}/src/task4.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/task5.c
         )
 # pull in common dependencies = library
 target_link_libraries(${PROJECT_NAME} pico_stdlib hardware_structs hardware_regs pico_multicore)

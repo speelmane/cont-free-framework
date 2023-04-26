@@ -9,13 +9,12 @@
 #include "pico/multicore.h"
 #include "include/common.h" //subschedule
 #include "timer_functions.h" //timer_funcs
-#include "pico/sem.h"
 #include "pico/platform.h"
 #include "hardware/structs/scb.h"
 #include "schedule.h"
 
 
-/* Bus performance counters, nr 0 reserved for XIP access counting, the rest can verify other contention sources if that is the wish */
+/* Bus performance counters, nr 0 reserved for XIP contested accesses and nr 1 for SRAM_5 contested accesses, the rest can verify other contention sources if that is the wish */
 #define bus_perf_0_hw ((bus_ctrl_perf_hw_t *)(BUSCTRL_BASE + BUSCTRL_PERFCTR0_OFFSET))
 #define bus_perf_1_hw ((bus_ctrl_perf_hw_t *)(BUSCTRL_BASE + BUSCTRL_PERFCTR1_OFFSET))
 #define bus_perf_2_hw ((bus_ctrl_perf_hw_t *)(BUSCTRL_BASE + BUSCTRL_PERFCTR2_OFFSET))
@@ -25,7 +24,6 @@
 #define ALARM_CORE_0 0
 #define ALARM_CORE_1 1
 
-
 #define ALARM_IRQ_CORE_0 TIMER_IRQ_0
 #define ALARM_IRQ_CORE_1 TIMER_IRQ_1
 
@@ -33,6 +31,8 @@
 __core_0_data("flag") char volatile alarm_flag_core_0 = false;
 __core_1_data("flag") char volatile alarm_flag_core_1 = false;
 
+__core_0_data("counter") int task_counter_0 = 0;
+__core_1_data("counter") int task_counter_1 = 0;
 
 __core_0_data("loops") uint64_t volatile target_core_0 = SCHEDULE_OFFSET + START_OFFSET_CORE_0;
 __core_1_data("loops") uint64_t volatile target_core_1 = SCHEDULE_OFFSET + START_OFFSET_CORE_1;
@@ -40,9 +40,8 @@ __core_1_data("loops") uint64_t volatile target_core_1 = SCHEDULE_OFFSET + START
 __core_0_data("table") table_entry_t schedule_table_core_0[TABLE_SIZE_CORE_0];
 __core_1_data("table") table_entry_t schedule_table_core_1[TABLE_SIZE_CORE_1];
 
-__core_1_data("vtor") uint32_t vector_table_core_1[48] = {0};
-
-semaphore_t sync_sem;
+/*! VTOR table for core 1, content invalid, content to be initialized in @ref system_init*/
+uint32_t __attribute__((section(".ram_vector_table_core_1"))) vector_table_core_1[48] = {0};
 
 /* Function prototypes */
 
@@ -69,7 +68,6 @@ void main_core_1(void)
     irq_set_enabled(ALARM_IRQ_CORE_1, true);
     /* End of interrupt setup routine */
 
-    sem_acquire_blocking(&sync_sem);
     scheduler_core_1(schedule_table_core_1);
 }
 
@@ -79,7 +77,7 @@ int main() {
     multicore_lauch_core1_separate_vtor_table(main_core_1, (uint32_t) vector_table_core_1);
 
     //wait slightly to ensure core 1 is def set up
-    sleep_ms_core_0(500000);
+    sleep_ms_core_0(100000);
 
     fill_schedule_core_0(schedule_table_core_0);
 
@@ -89,7 +87,6 @@ int main() {
     irq_set_enabled(ALARM_IRQ_CORE_0, true);
     /* End of interrupt setup routine */
 
-    sem_release(&sync_sem);
     scheduler_core_0(schedule_table_core_0);
     return 0;
 }
@@ -102,7 +99,6 @@ int main() {
 * Performs the following actions:
 * - turns off XIP cache
 * - sets up performance counters to count contested XIP/SRAM_5 accesses
-* - initializes the initial core syncing semaphore
 * - sets the core1 VTOR table to valid content
 */
 void system_init()
@@ -114,11 +110,8 @@ void system_init()
     bus_perf_0_hw->sel = arbiter_xip_main_perf_event_access_contested;
     bus_perf_1_hw->sel = arbiter_sram5_perf_event_access_contested;
     bus_perf_2_hw->sel = arbiter_xip_main_perf_event_access;
+    bus_perf_3_hw->sel = arbiter_apb_perf_event_access;
 
-
-
-    /* Semaphore init */
-    sem_init(&sync_sem, 0, 1);
 
     /* The content of VTOR table cannot be random, get the content from the core 0 VTOR table*/
     memcpy(vector_table_core_1, (const uint32_t *) scb_hw->vtor, sizeof(vector_table_core_1));
@@ -140,6 +133,9 @@ void __core_0_code("scheduler")(scheduler_core_0)(table_entry_t table[])
     // reset the counter
     bus_perf_0_hw->value = 0;
     bus_perf_1_hw->value = 0;
+    bus_perf_2_hw->value = 0;
+    bus_perf_3_hw->value = 0;
+
 
     while(1)
     {
@@ -185,18 +181,16 @@ static void __core_0_code("irq")(alarm_irq_core_0)(void) {
 
     alarm_flag_core_0 = true;
 
-    static int task_counter = 0;
-
-    if(task_counter < (TABLE_SIZE_CORE_0 - 1) )
+    if(task_counter_0 < (TABLE_SIZE_CORE_0 - 1) )
     {
-        task_counter++;
+        task_counter_0++;
     }
     else
     {
-        task_counter = 0;
+        task_counter_0 = 0;
     }
 
-    target_core_0 += schedule_table_core_0[task_counter].scheduled_wait_time;
+    target_core_0 += schedule_table_core_0[task_counter_0].scheduled_wait_time;
 
     // Write the lower 32 bits of the target time to the alarm which will arm it
     timer_hw->alarm[ALARM_CORE_0] = (uint32_t) target_core_0;
@@ -209,18 +203,17 @@ static void __core_1_code("irq")(alarm_irq_core_1)(void) {
 
     alarm_flag_core_1 = true;
 
-    static int task_counter = 0;
 
-    if(task_counter < (TABLE_SIZE_CORE_1 - 1) )
+    if(task_counter_1 < (TABLE_SIZE_CORE_1 - 1) )
     {
-        task_counter++;
+        task_counter_1++;
     }
     else
     {
-        task_counter = 0;
+        task_counter_1 = 0;
     }
 
-    target_core_1 += schedule_table_core_1[task_counter].scheduled_wait_time;
+    target_core_1 += schedule_table_core_1[task_counter_1].scheduled_wait_time;
 
     // Write the lower 32 bits of the target time to the alarm which will arm it
     timer_hw->alarm[ALARM_CORE_1] = (uint32_t) target_core_1;

@@ -3,3 +3,6 @@ build/*
 main_copy_do_not_use.c
 tmp_file_t3_rec.c
 disassembly_to_analyse.dis
+log_isolation.txt
+time_parser.py
+crt0_data_cpy_table.txt

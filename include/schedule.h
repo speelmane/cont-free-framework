@@ -4,13 +4,6 @@
 #include "stdint.h"
 #include "common.h"
 
-#define __core_0_code(group) __attribute__((section(".core_0_code." group)))
-#define __core_1_code(group) __attribute__((section(".core_1_code." group)))
-#define __core_0_data(group) __attribute__((section(".core_0_data." group)))
-#define __core_1_data(group) __attribute__((section(".core_1_data." group)))
-
-#define __inline_external __attribute__((always_inline))
-
 #define TABLE_SIZE_CORE_0 8
 #define TABLE_SIZE_CORE_1 3
 
@@ -31,6 +24,5 @@ typedef struct
 void fill_schedule_core_0(table_entry_t table[]);
 
 void fill_schedule_core_1(table_entry_t table[]);
-
 
 #endif /*SCHEDULE*/

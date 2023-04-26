@@ -134,6 +134,11 @@ SECTIONS
         *(.ram_vector_table)
     } > SRAM_1
 
+    /* ram vector table for core 1, assign this to a proper bank */
+   .ram_vector_table_core_1 (COPY): {
+        *(.ram_vector_table_core_1)
+    } > SRAM_3
+
     .data : {
         __data_start__ = .;
         *(vtable)
@@ -243,7 +248,6 @@ SECTIONS
 
     .core_1_data : {
         __core_1_data_start__ = .;
-        *(.core_1_data.vtor*)
         KEEP(*(.core_1_data.*))
         . = ALIGN(4);
         __core_1_data_end__ = .;

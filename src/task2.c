@@ -174,6 +174,9 @@ void task2(subschedule_t subschedule) //add relative waiting times as a paramete
         uint64_t timestamp_WRITE = subschedule.timestamp_func();
     #endif
 
+
+    asm volatile("nop \n nop \n nop");
+
     /* Write routine*/
     memcpy(&data_out, &local_data.local_data_out, sizeof(data_out));
     /* End of Write routine*/
@@ -189,6 +192,8 @@ void task2(subschedule_t subschedule) //add relative waiting times as a paramete
         printf("\n\nCORE %d, T2\nRead: %lli, execute: %lli, write: %lli, pass: %lli\n", subschedule.cpu_id, timestamp_READ, timestamp_EXECUTE, timestamp_WRITE, timestamp_PASS);
         printf("Return value: %d\n", data_out.return_result);
     #endif
+
+
 
     /* End of Write routine and end of task job, return to the scheduler */
 }

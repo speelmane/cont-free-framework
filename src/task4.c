@@ -62,7 +62,7 @@ static __scratch_y("task4") data_out_t data_out;
 */
 void __task4_runtime_copy("task4")(task4_E)(local_data_t * local_data)
 {
-  struct binarysearch_DATA binarysearch_data[ 15 ];
+    struct binarysearch_DATA binarysearch_data[ 15 ];
 
     /* Init section */
     int i;
