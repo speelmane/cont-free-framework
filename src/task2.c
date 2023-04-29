@@ -44,9 +44,9 @@ typedef struct
     If the conditions are met, the variable is placed in .rodata section
     .rodata will be placed in the flash, regardless of the accessing core.
 */
-static __scratch_y("task3") data_in_t data_in = {.a = {0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2}};
+static __scratch_y("task2") data_in_t data_in = {.a = {0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2}};
 
-static __scratch_y("task3") data_out_t data_out;
+static __scratch_y("task2") data_out_t data_out;
 
 void __task2_runtime_copy("task2")(task2_E)(local_data_t * local_data)
 {
@@ -173,9 +173,6 @@ void task2(subschedule_t subschedule) //add relative waiting times as a paramete
     #ifdef TIMESTAMP
         uint64_t timestamp_WRITE = subschedule.timestamp_func();
     #endif
-
-
-    asm volatile("nop \n nop \n nop");
 
     /* Write routine*/
     memcpy(&data_out, &local_data.local_data_out, sizeof(data_out));
