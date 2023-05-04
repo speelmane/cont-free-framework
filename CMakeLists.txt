@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
 
-# Disable SDK alarm support for this framework
-set(PICO_TIME_DEFAULT_ALARM_POOL_DISABLED 1)
-
 # build functions from pico sdk
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
@@ -12,6 +9,11 @@ set(CMAKE_C_STANDARD 11)
 pico_sdk_init()
 
 add_executable(${PROJECT_NAME})
+
+# Disable SDK alarm support for this framework
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+        PICO_DISABLE_SHARED_IRQ_HANDLERS=1
+        PICO_TIME_DEFAULT_ALARM_POOL_DISABLED=1)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/include/)
@@ -29,7 +31,7 @@ target_sources(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME} pico_stdlib hardware_structs hardware_regs pico_multicore)
 
 # LINK with a custom linker script
-set_target_properties(framework PROPERTIES PICO_TARGET_LINKER_SCRIPT 
+set_target_properties(${PROJECT_NAME} PROPERTIES PICO_TARGET_LINKER_SCRIPT 
     ${CMAKE_SOURCE_DIR}/linker_script.ld)
 
 # pico_enable_stdio_usb(${PROJECT_NAME} 0)

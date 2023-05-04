@@ -190,13 +190,13 @@ SECTIONS
         . = ALIGN(4);
         /* All data end */
         __data_end__ = .;
-    } > SRAM_1 AT> FLASH
+    } > SCRATCH_X AT> FLASH
     
 
     .uninitialized_data (COPY): {
         . = ALIGN(4);
         *(.uninitialized_data*)
-    } > SRAM_1
+    } > SCRATCH_X
 
 
 
@@ -310,7 +310,7 @@ SECTIONS
         *(COMMON)
         . = ALIGN(4);
         __bss_end__ = .;
-    } > SRAM_1
+    } > SCRATCH_X
 
 
     /* 

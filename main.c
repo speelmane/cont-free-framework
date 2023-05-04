@@ -40,6 +40,7 @@ __core_1_data("loops") uint64_t volatile target_core_1 = SCHEDULE_OFFSET + START
 __core_0_data("table") table_entry_t schedule_table_core_0[TABLE_SIZE_CORE_0];
 __core_1_data("table") table_entry_t schedule_table_core_1[TABLE_SIZE_CORE_1];
 
+
 /*! VTOR table for core 1, content invalid, content to be initialized in @ref system_init*/
 uint32_t __attribute__((section(".ram_vector_table_core_1"))) vector_table_core_1[48] = {0};
 
@@ -107,10 +108,10 @@ void system_init()
     xip_ctrl_hw->ctrl = (xip_ctrl_hw->ctrl & ~XIP_CTRL_EN_BITS);
 
     /* Counter init to count contested accesses */ 
-    bus_perf_0_hw->sel = arbiter_xip_main_perf_event_access_contested;
-    bus_perf_1_hw->sel = arbiter_sram5_perf_event_access_contested;
-    bus_perf_2_hw->sel = arbiter_xip_main_perf_event_access;
-    bus_perf_3_hw->sel = arbiter_apb_perf_event_access;
+    bus_perf_0_hw->sel = arbiter_sram0_perf_event_access_contested;
+    bus_perf_1_hw->sel = arbiter_sram1_perf_event_access_contested;
+    bus_perf_2_hw->sel = arbiter_sram2_perf_event_access_contested;
+    bus_perf_3_hw->sel = arbiter_sram3_perf_event_access_contested;
 
 
     /* The content of VTOR table cannot be random, get the content from the core 0 VTOR table*/
@@ -145,11 +146,6 @@ void __core_0_code("scheduler")(scheduler_core_0)(table_entry_t table[])
             alarm_flag_core_0 = false;
             table[i].task(table[i].subschedule);
         }
-
-        // printf("XIP perf counter: %d\n\n", bus_perf_0_hw->value);
-        // printf("SRAM_5 perf counter: %d\n\n", bus_perf_1_hw->value);
-
-
     }
 }
 
@@ -164,6 +160,12 @@ void __core_1_code("scheduler")(scheduler_core_1)(table_entry_t table[])
     // Write the lower 32 bits of the target time to the alarm which will arm it
     timer_hw->alarm[ALARM_CORE_1] = (uint32_t) target_core_1;
 
+    // reset the counter
+    bus_perf_0_hw->value = 0;
+    bus_perf_1_hw->value = 0;
+    bus_perf_2_hw->value = 0;
+    bus_perf_3_hw->value = 0;
+
     while(1)
     {
         for(int i=0; i<TABLE_SIZE_CORE_1; i++)
@@ -175,7 +177,7 @@ void __core_1_code("scheduler")(scheduler_core_1)(table_entry_t table[])
     }
 }
 
-static void __core_0_code("irq")(alarm_irq_core_0)(void) {
+void __core_0_code("irq")(alarm_irq_core_0)(void) {
     // Clear the alarm irq
     hw_clear_bits(&timer_hw->intr, 1u << ALARM_CORE_0);
 
@@ -197,7 +199,7 @@ static void __core_0_code("irq")(alarm_irq_core_0)(void) {
 
 }
 
-static void __core_1_code("irq")(alarm_irq_core_1)(void) {
+void __core_1_code("irq")(alarm_irq_core_1)(void) {
     // Clear the alarm irq
     hw_clear_bits(&timer_hw->intr, 1u << ALARM_CORE_1);
 

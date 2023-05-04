@@ -39,6 +39,8 @@ void __core_1_code("tablefill")(fill_schedule_core_1)(table_entry_t table[])
 {
     /*
         All time elements, if used, are interpreted in us
+        
+        
     */
     uint64_t scheduled_wait_time_array[TABLE_SIZE_CORE_1] = {550, 1250, 200}; //500 ms, 600 ms
     uint64_t r_to_e_wait_time_array[TABLE_SIZE_CORE_1] = {0}; 
