@@ -29,10 +29,10 @@ int main( void );
 #define FIX_3_072711026  ((int)  25172) /* FIX(3.072711026) */
 
 
-int jfdctint_data[ 64 ];
+int __core_0_data("data") jfdctint_data[ 64 ];
 
 
-const int __core_0_data("data") jfdctint_CHECKSUM = 1668124;
+const int jfdctint_CHECKSUM = 1668124;
 
 __core_0_code("code") void jfdctint_init()
 {

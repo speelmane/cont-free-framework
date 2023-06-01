@@ -108,10 +108,10 @@ void system_init()
     xip_ctrl_hw->ctrl = (xip_ctrl_hw->ctrl & ~XIP_CTRL_EN_BITS);
 
     /* Counter init to count contested accesses */ 
-    bus_perf_0_hw->sel = arbiter_sram0_perf_event_access_contested;
-    bus_perf_1_hw->sel = arbiter_sram1_perf_event_access_contested;
-    bus_perf_2_hw->sel = arbiter_sram2_perf_event_access_contested;
-    bus_perf_3_hw->sel = arbiter_sram3_perf_event_access_contested;
+    bus_perf_0_hw->sel = arbiter_sram4_perf_event_access;
+    bus_perf_1_hw->sel = arbiter_sram5_perf_event_access;
+    bus_perf_2_hw->sel = arbiter_xip_main_perf_event_access_contested;
+    bus_perf_3_hw->sel = arbiter_rom_perf_event_access_contested;
 
 
     /* The content of VTOR table cannot be random, get the content from the core 0 VTOR table*/
