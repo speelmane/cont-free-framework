@@ -16,7 +16,7 @@ In order to use the framework, some general setup requirements must be filled:
 A modifiable 3-phase task template is found under src/tasktemplate.c, having additional commentary on task setup.
 
 Due to compiler and system limitations, there are several restrictions for tasks that must be followed:
-- No global or static variables can be used, unless the access core is known beforehand. If the global variable is used, the corresponding function attribute (´__core_0_data´ or ´__core_1_data´) must be used for the variable.
+- No global or static variables can be used, unless the access core is known beforehand. If the global variable is used, the corresponding function attribute (`__core_0_data` or `__core_1_data`) must be used for the variable.
 - Due to compiler limitations, multiple operations such as
   - float and double operations;
   - division and modulo operations;
