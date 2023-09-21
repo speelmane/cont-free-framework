@@ -15,7 +15,8 @@
 
 typedef struct
 {
-    int64_t scheduled_wait_time;
+    int64_t task_release_offset;
+    int64_t write_release_offset;
     void (* task)(subschedule_t subschedule);
     subschedule_t subschedule;
 } table_entry_t;

@@ -19,8 +19,7 @@ typedef struct
     char * exec_copy_func_dst;
     uint64_t (* timestamp_func)();
     void (* sleep_func)(uint64_t ms);
-    int64_t r_to_e_wait_time;
-    int64_t e_to_w_wait_time;
+    char volatile * write_release_flag;
 } subschedule_t;
 
 

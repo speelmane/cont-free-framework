@@ -21,21 +21,31 @@
 #define bus_perf_3_hw ((bus_ctrl_perf_hw_t *)(BUSCTRL_BASE + BUSCTRL_PERFCTR3_OFFSET))
 
 /* Alarm setup */
-#define ALARM_CORE_0 0
-#define ALARM_CORE_1 1
+#define ALARM_TASK_RELEASE_CORE_0 0
+#define ALARM_TASK_RELEASE_CORE_1 1
+#define ALARM_WRITE_RELEASE_CORE_0 2
+#define ALARM_WRITE_RELEASE_CORE_1 3
 
-#define ALARM_IRQ_CORE_0 TIMER_IRQ_0
-#define ALARM_IRQ_CORE_1 TIMER_IRQ_1
+#define ALARM_TASK_IRQ_CORE_0 TIMER_IRQ_0
+#define ALARM_TASK_IRQ_CORE_1 TIMER_IRQ_1
+#define ALARM_WRITE_IRQ_CORE_0 TIMER_IRQ_2
+#define ALARM_WRITE_IRQ_CORE_1 TIMER_IRQ_3
 
 /* By default the cores should wait until the flag is cleared */
-__core_0_data("flag") char volatile alarm_flag_core_0 = false;
-__core_1_data("flag") char volatile alarm_flag_core_1 = false;
+__core_0_data("flag") char volatile task_release_flag_core_0 = false;
+__core_1_data("flag") char volatile task_release_flag_core_1 = false;
+
+__core_0_data("writerelease") char volatile write_release_flag_core_0 = false;
+__core_1_data("writerelease") char volatile write_release_flag_core_1 = false;
 
 __core_0_data("counter") int task_counter_0 = 0;
 __core_1_data("counter") int task_counter_1 = 0;
 
-__core_0_data("loops") uint64_t volatile target_core_0 = SCHEDULE_OFFSET + START_OFFSET_CORE_0;
-__core_1_data("loops") uint64_t volatile target_core_1 = SCHEDULE_OFFSET + START_OFFSET_CORE_1;
+__core_0_data("loops") uint64_t volatile target_task_release_core_0 = SCHEDULE_OFFSET + START_OFFSET_CORE_0;
+__core_1_data("loops") uint64_t volatile target_task_release_core_1 = SCHEDULE_OFFSET + START_OFFSET_CORE_1;
+
+__core_0_data("writes") uint64_t volatile target_write_release_core_0 = 0; //TODO: set this to whatever the first shift is going to be, ABSOLUTE TIME
+__core_1_data("writes") uint64_t volatile target_write_release_core_1 = 0; //TODO: set this to whatever the first shift is going to be, ABSOLUTE TIME
 
 __core_0_data("table") table_entry_t schedule_table_core_0[TABLE_SIZE_CORE_0];
 __core_1_data("table") table_entry_t schedule_table_core_1[TABLE_SIZE_CORE_1];
@@ -45,12 +55,13 @@ __core_1_data("table") table_entry_t schedule_table_core_1[TABLE_SIZE_CORE_1];
 uint32_t __attribute__((section(".ram_vector_table_core_1"))) vector_table_core_1[48] = {0};
 
 /* Function prototypes */
+static void __core_0_code("irq")(alarm_task_irq_core_0)(void);
+static void __core_1_code("irq")(alarm_task_irq_core_1)(void);
+static void __core_0_code("irq")(alarm_write_irq_core_0)(void);
+static void __core_1_code("irq")(alarm_write_irq_core_1)(void);
 
-static void __core_0_code("irq")(alarm_irq_core_0)(void);
-static void __core_1_code("irq")(alarm_irq_core_1)(void);
-
-void __core_1_code("scheduler")(scheduler_core_1)(table_entry_t table[]);
 void __core_0_code("scheduler")(scheduler_core_0)(table_entry_t table[]);
+void __core_1_code("scheduler")(scheduler_core_1)(table_entry_t table[]);
 
 void system_init();
 
@@ -64,9 +75,15 @@ void main_core_1(void)
     fill_schedule_core_1(schedule_table_core_1);
 
     /* Interrupt setup routine */
-    hw_set_bits(&timer_hw->inte, 1u << ALARM_CORE_1);
-    irq_set_exclusive_handler(ALARM_IRQ_CORE_1, alarm_irq_core_1);
-    irq_set_enabled(ALARM_IRQ_CORE_1, true);
+    // task release interrupt
+    hw_set_bits(&timer_hw->inte, 1u << ALARM_TASK_RELEASE_CORE_1);
+    irq_set_exclusive_handler(ALARM_TASK_IRQ_CORE_1, alarm_task_irq_core_1);
+    irq_set_enabled(ALARM_TASK_IRQ_CORE_1, true);
+
+    // write release interrupt
+    hw_set_bits(&timer_hw->inte, 1u << ALARM_WRITE_RELEASE_CORE_1);
+    irq_set_exclusive_handler(ALARM_WRITE_IRQ_CORE_1, alarm_write_irq_core_1);
+    irq_set_enabled(ALARM_WRITE_IRQ_CORE_1, true);
     /* End of interrupt setup routine */
 
     scheduler_core_1(schedule_table_core_1);
@@ -83,9 +100,15 @@ int main() {
     fill_schedule_core_0(schedule_table_core_0);
 
     /* Interrupt setup routine */
-    hw_set_bits(&timer_hw->inte, 1u << ALARM_CORE_0);
-    irq_set_exclusive_handler(ALARM_IRQ_CORE_0, alarm_irq_core_0);
-    irq_set_enabled(ALARM_IRQ_CORE_0, true);
+    // task release interrupt
+    hw_set_bits(&timer_hw->inte, 1u << ALARM_TASK_RELEASE_CORE_0);
+    irq_set_exclusive_handler(ALARM_TASK_IRQ_CORE_0, alarm_task_irq_core_0);
+    irq_set_enabled(ALARM_TASK_IRQ_CORE_0, true);
+
+    // write release interrupt
+    hw_set_bits(&timer_hw->inte, 1u << ALARM_WRITE_RELEASE_CORE_0);
+    irq_set_exclusive_handler(ALARM_WRITE_IRQ_CORE_0, alarm_write_irq_core_0);
+    irq_set_enabled(ALARM_WRITE_IRQ_CORE_0, true);
     /* End of interrupt setup routine */
 
     scheduler_core_0(schedule_table_core_0);
@@ -108,8 +131,8 @@ void system_init()
     xip_ctrl_hw->ctrl = (xip_ctrl_hw->ctrl & ~XIP_CTRL_EN_BITS);
 
     /* Counter init to count contested accesses */ 
-    bus_perf_0_hw->sel = arbiter_sram4_perf_event_access;
-    bus_perf_1_hw->sel = arbiter_sram5_perf_event_access;
+    bus_perf_0_hw->sel = arbiter_sram4_perf_event_access_contested;
+    bus_perf_1_hw->sel = arbiter_sram5_perf_event_access_contested;
     bus_perf_2_hw->sel = arbiter_xip_main_perf_event_access_contested;
     bus_perf_3_hw->sel = arbiter_rom_perf_event_access_contested;
 
@@ -129,7 +152,7 @@ void system_init()
 void __core_0_code("scheduler")(scheduler_core_0)(table_entry_t table[])
 {
     /* Release the first task here */
-    timer_hw->alarm[ALARM_CORE_0] = (uint32_t) target_core_0;
+    timer_hw->alarm[ALARM_TASK_RELEASE_CORE_0] = (uint32_t) target_task_release_core_0;
 
     // reset the counter
     bus_perf_0_hw->value = 0;
@@ -142,8 +165,9 @@ void __core_0_code("scheduler")(scheduler_core_0)(table_entry_t table[])
     {
         for(int i=0; i<TABLE_SIZE_CORE_0; i++)
         {
-            while(!alarm_flag_core_0);
-            alarm_flag_core_0 = false;
+            while(!task_release_flag_core_0);
+            task_release_flag_core_0 = false;
+            table[i].subschedule.write_release_flag = &write_release_flag_core_0;
             table[i].task(table[i].subschedule);
         }
     }
@@ -158,7 +182,7 @@ void __core_0_code("scheduler")(scheduler_core_0)(table_entry_t table[])
 void __core_1_code("scheduler")(scheduler_core_1)(table_entry_t table[])
 {
     // Write the lower 32 bits of the target time to the alarm which will arm it
-    timer_hw->alarm[ALARM_CORE_1] = (uint32_t) target_core_1;
+    timer_hw->alarm[ALARM_TASK_RELEASE_CORE_1] = (uint32_t) target_task_release_core_1;
 
     // reset the counter
     bus_perf_0_hw->value = 0;
@@ -170,18 +194,22 @@ void __core_1_code("scheduler")(scheduler_core_1)(table_entry_t table[])
     {
         for(int i=0; i<TABLE_SIZE_CORE_1; i++)
         {
-            while(!alarm_flag_core_1);
-            alarm_flag_core_1 = false;
+            while(!task_release_flag_core_1);
+            task_release_flag_core_1 = false;
+            table[i].subschedule.write_release_flag = &write_release_flag_core_1;
             table[i].task(table[i].subschedule);
         }
     }
 }
 
-void __core_0_code("irq")(alarm_irq_core_0)(void) {
+void __core_0_code("irq")(alarm_task_irq_core_0)(void) {
     // Clear the alarm irq
-    hw_clear_bits(&timer_hw->intr, 1u << ALARM_CORE_0);
+    hw_clear_bits(&timer_hw->intr, 1u << ALARM_TASK_RELEASE_CORE_0);
+    task_release_flag_core_0 = true;
 
-    alarm_flag_core_0 = true;
+    // schedule write release - CURRENT RELEASE + WRITE RELEASE OFFSET
+    target_write_release_core_0 = target_task_release_core_0 + schedule_table_core_0[task_counter_0].write_release_offset;
+    timer_hw->alarm[ALARM_WRITE_RELEASE_CORE_0] = (uint32_t) target_write_release_core_0;
 
     if(task_counter_0 < (TABLE_SIZE_CORE_0 - 1) )
     {
@@ -192,18 +220,23 @@ void __core_0_code("irq")(alarm_irq_core_0)(void) {
         task_counter_0 = 0;
     }
 
-    target_core_0 += schedule_table_core_0[task_counter_0].scheduled_wait_time;
+    // schedule next task release
+    target_task_release_core_0 += schedule_table_core_0[task_counter_0].task_release_offset;
 
     // Write the lower 32 bits of the target time to the alarm which will arm it
-    timer_hw->alarm[ALARM_CORE_0] = (uint32_t) target_core_0;
+    timer_hw->alarm[ALARM_TASK_RELEASE_CORE_0] = (uint32_t) target_task_release_core_0;
 
 }
 
-void __core_1_code("irq")(alarm_irq_core_1)(void) {
+void __core_1_code("irq")(alarm_task_irq_core_1)(void) {
     // Clear the alarm irq
-    hw_clear_bits(&timer_hw->intr, 1u << ALARM_CORE_1);
+    hw_clear_bits(&timer_hw->intr, 1u << ALARM_TASK_RELEASE_CORE_1);
+    task_release_flag_core_1 = true;
 
-    alarm_flag_core_1 = true;
+    // schedule write release - CURRENT RELEASE + WRITE RELEASE OFFSET
+    target_write_release_core_1 = target_task_release_core_1 + schedule_table_core_1[task_counter_1].write_release_offset;
+    timer_hw->alarm[ALARM_WRITE_RELEASE_CORE_1] = (uint32_t) target_write_release_core_1;
+    
 
 
     if(task_counter_1 < (TABLE_SIZE_CORE_1 - 1) )
@@ -215,9 +248,22 @@ void __core_1_code("irq")(alarm_irq_core_1)(void) {
         task_counter_1 = 0;
     }
 
-    target_core_1 += schedule_table_core_1[task_counter_1].scheduled_wait_time;
+    // schedule next task release
+    target_task_release_core_1 += schedule_table_core_1[task_counter_1].task_release_offset;
 
     // Write the lower 32 bits of the target time to the alarm which will arm it
-    timer_hw->alarm[ALARM_CORE_1] = (uint32_t) target_core_1;
+    timer_hw->alarm[ALARM_TASK_RELEASE_CORE_1] = (uint32_t) target_task_release_core_1;
 
+}
+
+void __core_0_code("irq")(alarm_write_irq_core_0)(void) {
+    // Clear the alarm irq
+    hw_clear_bits(&timer_hw->intr, 1u << ALARM_WRITE_RELEASE_CORE_0);
+    write_release_flag_core_0 = true;
+}
+
+void __core_1_code("irq")(alarm_write_irq_core_1)(void) {
+    // Clear the alarm irq
+    hw_clear_bits(&timer_hw->intr, 1u << ALARM_WRITE_RELEASE_CORE_1);
+    write_release_flag_core_1 = true;
 }

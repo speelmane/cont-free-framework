@@ -53,6 +53,7 @@ typedef struct
 {
     data_in_t local_data_in;
     data_out_t local_data_out;
+    char volatile * write_release_flag;
 } local_data_t;
 
 
@@ -214,6 +215,10 @@ void __task1_runtime_copy("task1")(task1_E)(local_data_t * local_data)
         local_data->local_data_out.transformed_coefficients[ i ] = jfdctint_data[ i ];
     }
     local_data->local_data_out.transformation_result = ( ( checksum == local_data->local_data_in.checksum ) ? 0 : -1 );
+
+    //MANDATORY ROUTINE IN ALL TASKS 
+    while(!(*(local_data->write_release_flag))); // wait for the write flag to be released
+    *(local_data->write_release_flag) = 0; // reset the write flag
 }
 
 /* This will execute from the flash, except for the task_exec function
@@ -241,6 +246,7 @@ void task1(subschedule_t subschedule) //add relative waiting times as a paramete
 
     /* Perform memcpy on data and code */
     memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
+    local_data.write_release_flag = subschedule.write_release_flag; // pass the address of the flag to check
 
     int func_size = (int) (__task1_runtime_copy_end__) - (int)(__task1_runtime_copy_start__);
 

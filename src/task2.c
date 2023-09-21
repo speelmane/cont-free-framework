@@ -35,6 +35,7 @@ typedef struct
 {
     data_in_t local_data_in;
     data_out_t local_data_out;
+    char volatile * write_release_flag;
 } local_data_t;
 
 
@@ -117,6 +118,9 @@ void __task2_runtime_copy("task2")(task2_E)(local_data_t * local_data)
 
     local_data->local_data_out.return_result = ( returnValue + ( -65 ) ) != 0;
 
+    while(!(*(local_data->write_release_flag))); // wait for the write flag to be released
+    *(local_data->write_release_flag) = 0; // reset the write flag
+
 }
 
 /* This will execute from the flash, except for the task_exec function
@@ -143,6 +147,7 @@ void task2(subschedule_t subschedule) //add relative waiting times as a paramete
 
     /* Perform memcpy on data and code */
     memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
+    local_data.write_release_flag = subschedule.write_release_flag;
 
     int func_size = (int) (__task2_runtime_copy_end__) - (int)(__task2_runtime_copy_start__);
 

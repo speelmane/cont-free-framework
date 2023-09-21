@@ -46,6 +46,7 @@ typedef struct
 {
     data_in_t local_data_in;
     data_out_t local_data_out;
+    char volatile * write_release_flag;
 } local_data_t;
 
 
@@ -88,6 +89,10 @@ void __taskXXX_runtime_copy("taskXXX")(taskXXX_E)(local_data_t * local_data)
 
     /* example push of results produced by the execute function to local_data_out */
     local_data->local_data_out.output_data_1 = internal_execute_data;
+
+    /* Mandatory release check, must be a part of the function to be executed, DO NOT MODIFY */
+    while(!(*(local_data->write_release_flag))); // wait for the write flag to be released
+    *(local_data->write_release_flag) = 0; // reset the write flag
 }
 
 
@@ -100,8 +105,9 @@ void taskXXX(subschedule_t subschedule)
     /* Get the previously defined linker script symbols to the C code*/
     extern char __taskXXX_runtime_copy_start__[],  __taskXXX_runtime_copy_end__[];
 
-    /* Perform memcpy on data */
+    /* Perform memcpy on data and pass the address of the flag to check when ready to write */
     memcpy(&local_data.local_data_in, &data_in, sizeof(data_in));
+    local_data.write_release_flag = subschedule.write_release_flag;
 
     /* Calculate "execute" code size.
     */
@@ -116,6 +122,9 @@ void taskXXX(subschedule_t subschedule)
     /* Exec routine (RAM)*/
     exec_copy_func(&local_data);
     /* End of Exec routine */
+
+    while(!(*subschedule.write_release_flag)); // wait for the write flag to be released
+    *subschedule.write_release_flag = 0; // reset the write flag
 
     /* Write routine*/
     memcpy(&data_out, &local_data.local_data_out, sizeof(data_out));
